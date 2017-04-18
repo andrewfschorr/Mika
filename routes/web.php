@@ -23,3 +23,8 @@ Route::get('/foo/{id}', function ($id) {
     $task = App\Task::find($id);
     return view('task', compact('task'));
 });
+
+Route::get('/foo/i', function () {
+    $tasks = App\Task::incomplete();
+    return view('foo', compact('tasks'));
+});
