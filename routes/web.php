@@ -11,6 +11,12 @@
 |
 */
 
+use App\Task;
+
+Route::get('/tasks', 'TasksController@Index');
+Route::get('/tasks/{id}', 'TasksController@Show');
+Route::get('/', 'PostController@Index');
+
 Route::get('/foo', function () {
     //$tasks = DB::table('tasks')->get();
     $tasks = App\Task::all();
