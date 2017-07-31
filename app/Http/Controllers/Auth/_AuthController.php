@@ -2,44 +2,48 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Auth;
 use App\User;
 use Socialite;
+use Validator;
+use App\Http\Controllers\Controller;
+use Illuminate\Foundation\Auth\ThrottlesLogins;
+use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
 
-class LoginController extends Controller
+
+class AuthController extends Controller
 {
     /*
     |--------------------------------------------------------------------------
-    | Login Controller
+    | Registration & Login Controller
     |--------------------------------------------------------------------------
     |
-    | This controller handles authenticating users for the application and
-    | redirecting them to your home screen. The controller uses a trait
-    | to conveniently provide its functionality to your applications.
+    | This controller handles the registration of new users, as well as the
+    | authentication of existing users. By default, this controller uses
+    | a simple trait to add these behaviors. Why don't you explore it?
     |
     */
 
-    use AuthenticatesUsers;
+    use AuthenticatesAndRegistersUsers, ThrottlesLogins;
 
     /**
-     * Where to redirect users after login.
+     * Where to redirect users after login / registration.
      *
      * @var string
      */
-    protected $redirectTo = '/home';
+    protected $redirectTo = '/';
 
     /**
-     * Create a new controller instance.
+     * Create a new authentication controller instance.
      *
      * @return void
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->middleware($this->guestMiddleware(), ['except' => 'logout']);
     }
 
-        /**
+    /**
      * Get a validator for an incoming registration request.
      *
      * @param  array  $data
@@ -76,7 +80,7 @@ class LoginController extends Controller
      */
     public function redirectToProvider($provider)
     {
-        return \Socialite::driver($provider)->redirect();
+        return Socialite::driver($provider)->redirect();
     }
 
     /**
@@ -93,12 +97,7 @@ class LoginController extends Controller
         }
 
         $authUser = $this->findOrCreateUser($user, $provider);
-        \Log::info('hiiii');
-        \Log::info($user->name);
-        \Log::info($user->email);
-        \Log::info($user->id);
-        //Auth::login($authUser, true);
-        return 'hello';
+        Auth::login($authUser, true);
         return redirect($this->redirectTo);
     }
 
@@ -112,10 +111,6 @@ class LoginController extends Controller
         if ($authUser) {
             return $authUser;
         }
-        \Log::info($user->name);
-        \Log::info($user->email);
-        \Log::info($user->id);
-
         return User::create([
             'name'     => $user->name,
             'email'    => $user->email,
@@ -123,4 +118,6 @@ class LoginController extends Controller
             'provider_id' => $user->id
         ]);
     }
+
+
 }
