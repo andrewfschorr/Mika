@@ -76,7 +76,7 @@ class LoginController extends Controller
      */
     public function redirectToProvider($provider)
     {
-        return \Socialite::driver($provider)->redirect();
+        return Socialite::with('instagram')->redirect();
     }
 
     /**
@@ -93,10 +93,8 @@ class LoginController extends Controller
         }
 
         $authUser = $this->findOrCreateUser($user, $provider);
-        \Log::info('hiiii');
-        \Log::info($user->name);
-        \Log::info($user->email);
-        \Log::info($user->id);
+
+        dd($user);
         //Auth::login($authUser, true);
         return 'hello';
         return redirect($this->redirectTo);
