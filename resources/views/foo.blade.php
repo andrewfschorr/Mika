@@ -4,6 +4,7 @@
     <title>Yo world!</title>
 </head>
 <body>
+    <h1>hiiii</h1>
     <ul>
         @foreach ($tasks as $task)
             <li>

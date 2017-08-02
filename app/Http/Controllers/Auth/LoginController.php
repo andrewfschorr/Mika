@@ -96,7 +96,6 @@ class LoginController extends Controller
 
         dd($user);
         //Auth::login($authUser, true);
-        return 'hello';
         return redirect($this->redirectTo);
     }
 
@@ -110,9 +109,6 @@ class LoginController extends Controller
         if ($authUser) {
             return $authUser;
         }
-        \Log::info($user->name);
-        \Log::info($user->email);
-        \Log::info($user->id);
 
         return User::create([
             'name'     => $user->name,
