@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
+use App\Http\Controllers\GuestController;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\User;
 use Socialite;
 
-class LoginController extends Controller
+class LoginController extends GuestController
 {
     /*
     |--------------------------------------------------------------------------
