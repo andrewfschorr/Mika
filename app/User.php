@@ -62,35 +62,37 @@ class User extends Authenticatable
     //     }
     // }
 
-    private function setValues(array $source = [], array $dest = [])
-    {
-        echo 'hiii';
-        foreach ($source as $key => $val) {
+    // private function setValues(array $source, array $dest)
+    // {
+    //     foreach ($source as $key => $val) {
+    //         $dest[$key] = $val;
+    //     }
+    //     return $dest;
+    // }
 
-        }
-    }
+    // private function deletevalue($key, array $arr)
+    // {
+    //     $opts = $this->options;
+    //     $array_key_exists = array_key_exists($key, $opts);
+    //     if ($array_key_exists) {
+    //         unset($opts[$key]);
+    //         $this->options = $opts;
+    //     }
+    //     return $array_key_exists;
+    // }
 
-    private function setValue($key, $value, array $arr)
-    {
-        $arr[$key] = $value;
-        return $arr;
-    }
+    // public function getOptionsAttribute($value)
+    // {
+    //      // return json_decode($value);
+    // }
 
-    private function deletevalue($key, array $arr)
+    public function setOptionsAttribute($arr)
     {
-        $opts = $this->options;
-        $array_key_exists = array_key_exists($key, $opts);
-        if ($array_key_exists) {
-            unset($opts[$key]);
-            $this->options = $opts;
-        }
-        return $array_key_exists;
+        $this->attributes['options'] = json_encode(array_merge($this->options, $arr));
     }
 
     public function __construct(array $attributes = array())
     {
-        // $this->options = array_merge($this->default_opts, $this->options);
-        // $this->setInitialIgFields();
         parent::__construct($attributes);
     }
 }
