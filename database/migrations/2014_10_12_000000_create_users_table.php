@@ -10,7 +10,7 @@ class CreateUsersTable extends Migration
      * Run the migrations.
      *
      * @return void
-     */  
+     */
     public function up()
     {
         Schema::create('users', function (Blueprint $table) {
@@ -18,9 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->boolean('hasLinkedIg')->default(false);
-            $table->json('igAttributes');
-            $table->json('options');
+            $table->json('igAttrs')->nullable();
+            $table->json('options')->nullable();
             $table->string('igName')->unique()->nullable();
             $table->rememberToken();
             $table->timestamps();

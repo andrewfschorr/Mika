@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 
+        'name', 'email', 'password',
     ];
 
     /**
@@ -33,8 +33,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'hasLinkedIg' => 'boolean',
-        'igAttributes' => 'array',
+        'igAttrs' => 'array',
         'options' => 'array',
     ];
 
@@ -44,9 +43,54 @@ class User extends Authenticatable
      * @var array
      */
     protected $attributes = [
-        'hasLinkedIg' => false,
-        'igAttributes' => '{}',
         'options' => '{}',
-        'igName' => null,
+        'igAttrs' => '{}',
     ];
+
+    protected $igFields = ['id', 'username', 'full_name', 'profile_picture', 'bio', 'website'];
+
+
+    protected $default_opts = [
+        'foo' => 'this will always be included',
+    ];
+
+    // private function setInitialIgFields()
+    // {
+    //     $igAttrs = $this->igAttrs;
+    //     foreach ($this->igFields as $igField) {
+    //         $igAttrs
+    //     }
+    // }
+
+    private function setValues(array $source = [], array $dest = [])
+    {
+        echo 'hiii';
+        foreach ($source as $key => $val) {
+
+        }
+    }
+
+    private function setValue($key, $value, array $arr)
+    {
+        $arr[$key] = $value;
+        return $arr;
+    }
+
+    private function deletevalue($key, array $arr)
+    {
+        $opts = $this->options;
+        $array_key_exists = array_key_exists($key, $opts);
+        if ($array_key_exists) {
+            unset($opts[$key]);
+            $this->options = $opts;
+        }
+        return $array_key_exists;
+    }
+
+    public function __construct(array $attributes = array())
+    {
+        // $this->options = array_merge($this->default_opts, $this->options);
+        // $this->setInitialIgFields();
+        parent::__construct($attributes);
+    }
 }
