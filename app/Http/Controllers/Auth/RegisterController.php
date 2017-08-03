@@ -66,6 +66,8 @@ class RegisterController extends GuestController
             'name' => $data['name'],
             'email' => $data['email'],
             'password' => bcrypt($data['password']),
+            'hasLinkedIg' => 0,
+            'options' => [],
         ]);
     }
 }
