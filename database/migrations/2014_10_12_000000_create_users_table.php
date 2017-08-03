@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->boolean('hasLinkedIg')->default(false);
+            $table->json('igAttributes');
             $table->json('options');
             $table->string('igName')->unique()->nullable();
             $table->rememberToken();

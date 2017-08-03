@@ -15,7 +15,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'name', 'email', 'password', 'hasLinkedIg', 'options',
+        'name', 'email', 'password', 
     ];
 
     /**
@@ -33,8 +33,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'options' => 'array',
         'hasLinkedIg' => 'boolean',
+        'igAttributes' => 'array',
+        'options' => 'array',
     ];
 
     /**
@@ -43,6 +44,9 @@ class User extends Authenticatable
      * @var array
      */
     protected $attributes = [
-        'options' => [],
+        'hasLinkedIg' => false,
+        'igAttributes' => '{}',
+        'options' => '{}',
+        'igName' => null,
     ];
 }
