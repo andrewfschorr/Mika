@@ -5,6 +5,19 @@ namespace App;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
+/*
+ * This is the \User API Weeeeeeeeee
+ *
+ * $user = App\user::find(1);
+ * $user->setOption('foo', 'bar');
+ * $user->setOptions([
+ *  'thing' => 'tihng t00'
+ * ]);
+ * $user->options['foo']
+ * $user->deleteOption('foo');
+ * $user->deleteOptions(['a', 'b', 'c']);
+ * $user->getOption('foo');
+ */
 class User extends Authenticatable
 {
     use Notifiable;
@@ -49,46 +62,52 @@ class User extends Authenticatable
 
     protected $igFields = ['id', 'username', 'full_name', 'profile_picture', 'bio', 'website'];
 
-
+    // if $user->getOption is not found it will fall back to this
     protected $default_opts = [
-        'foo' => 'this will always be included',
+        'fo' => 'this will always be included',
     ];
 
-    // private function setInitialIgFields()
-    // {
-    //     $igAttrs = $this->igAttrs;
-    //     foreach ($this->igFields as $igField) {
-    //         $igAttrs
-    //     }
-    // }
-
-    // private function setValues(array $source, array $dest)
-    // {
-    //     foreach ($source as $key => $val) {
-    //         $dest[$key] = $val;
-    //     }
-    //     return $dest;
-    // }
-
-    // private function deletevalue($key, array $arr)
-    // {
-    //     $opts = $this->options;
-    //     $array_key_exists = array_key_exists($key, $opts);
-    //     if ($array_key_exists) {
-    //         unset($opts[$key]);
-    //         $this->options = $opts;
-    //     }
-    //     return $array_key_exists;
-    // }
-
-    // public function getOptionsAttribute($value)
-    // {
-    //      // return json_decode($value);
-    // }
-
-    public function setOptionsAttribute($arr)
+    private function setKeyValue($key, $value, array &$arr)
     {
-        $this->attributes['options'] = json_encode(array_merge($this->options, $arr));
+        return $arr[$key] = $value;
+    }
+
+    public function setOption($key, $val) 
+    {
+        $dest = $this->options;
+        $this->setKeyValue($key, $val, $dest);
+        return $this->options = $dest;
+    }
+
+    public function setOptions(array $arr)
+    {
+        $dest = $this->options;
+        foreach ($arr as $key => $value) {
+            $this->setKeyValue($key, $value, $dest);
+        }
+        return $this->options = $dest;
+    }
+
+    public function getOption($key) 
+    {
+        $arr = array_merge($this->default_opts, $this->options);
+        return $arr[$key];
+    }
+
+    public function deleteOption($key) 
+    {
+        $arr = $this->options;
+        unset($arr[$key]);
+        return $this->options = $arr;
+    }
+
+    public function deleteOptions(array $arrKeys) 
+    {
+        $deletedArr = $this->options;
+        foreach ($arrKeys as $key) {
+            unset($deletedArr[$key]);
+        }
+        return $this->options = $deletedArr;
     }
 
     public function __construct(array $attributes = array())
