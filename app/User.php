@@ -17,7 +17,17 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * $user->deleteOption('foo');
  * $user->deleteOptions(['a', 'b', 'c']);
  * $user->getOption('foo');
+ *
+ * $user->setIg('id', 12345);
+ * $user->setIg([
+ *     'id' => 12345
+ *      'username' => frankeliuspoopie
+ * ]);
+*
+ * INCONSISTANCY - 
+ * $user->getIg('name'); Doesnt exist
  */
+
 class User extends Authenticatable
 {
     use Notifiable;
@@ -108,6 +118,26 @@ class User extends Authenticatable
             unset($deletedArr[$key]);
         }
         return $this->options = $deletedArr;
+    }
+
+    public function setIg($key, $value) 
+    {
+        $igAttrs = $this->igAttrs;
+        if (!in_array($key, $this->igFields)) {
+            // TODO - Custom exception?
+            throw new \Exception('Can only set keys in igFields on igAttrs');
+            return; // not needed?
+        }
+        $this->setKeyValue($key, $value, $igAttrs);
+        return $this->igAttrs = $igAttrs;
+    }
+
+    public function setIgs(array $igAttrs) 
+    {
+        foreach ($igAttrs as $igKey => $igVal) {
+            $this->setIg($igKey, $igVal);
+        }
+        return $this->igAttrs;
     }
 
     public function __construct(array $attributes = array())
