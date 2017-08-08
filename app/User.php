@@ -23,9 +23,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  *     'id' => 12345
  *      'username' => frankeliuspoopie
  * ]);
-*
- * INCONSISTANCY - 
- * $user->getIg('name'); Doesnt exist
+ *
+ * $user->getIg('name');
+ * $user->getOption('foo');
  */
 
 class User extends Authenticatable
@@ -82,6 +82,16 @@ class User extends Authenticatable
         return $arr[$key] = $value;
     }
 
+    private function getKeyValue($key, $attribute)
+    {
+        if ($attribute === 'option') {
+            $attrs = array_merge($this->default_opts, $this->options);;
+        } else {
+            $attrs = $this->igAttrs;
+        }
+        return $attrs[$key];
+    }
+
     public function setOption($key, $val) 
     {
         $dest = $this->options;
@@ -100,8 +110,12 @@ class User extends Authenticatable
 
     public function getOption($key) 
     {
-        $arr = array_merge($this->default_opts, $this->options);
-        return $arr[$key];
+        return $this->getKeyValue($key, 'option');
+    }
+
+    public function getIg($key) 
+    {
+        return $this->getKeyValue($key, 'ig');
     }
 
     public function deleteOption($key) 
