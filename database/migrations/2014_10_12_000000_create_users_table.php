@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->json('igAttrs')->nullable();
             $table->json('options')->nullable();
-            $table->string('igName')->unique()->nullable();
+            $table->string('access_token')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

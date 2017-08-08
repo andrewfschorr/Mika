@@ -58,6 +58,7 @@ class User extends Authenticatable
     protected $casts = [
         'igAttrs' => 'array',
         'options' => 'array',
+        'access_token' => 'string',
     ];
 
     /**
@@ -68,6 +69,7 @@ class User extends Authenticatable
     protected $attributes = [
         'options' => '{}',
         'igAttrs' => '{}',
+        'access_token' => '',
     ];
 
     protected $igFields = ['id', 'username', 'full_name', 'profile_picture', 'bio', 'website'];
@@ -93,7 +95,7 @@ class User extends Authenticatable
         return isset($attrs[$key]) ? $attrs[$key] : null;
     }
 
-    public function setOption($key, $val) 
+    public function setOption($key, $val)
     {
         $dest = $this->options;
         $this->setKeyValue($key, $val, $dest);
@@ -109,23 +111,23 @@ class User extends Authenticatable
         return $this->options = $dest;
     }
 
-    public function getOption($key) 
+    public function getOption($key)
     {
         return $this->getKeyValue($key, 'option');
     }
 
-    public function getIg($key) 
+    public function getIg($key)
     {
         return $this->getKeyValue($key, 'ig');
     }
 
-    public function deleteOption($key) 
+    public function deleteOption($key)
     {
         $arr = $this->options;
         return $this->options = $this->deleteKeyValue($arr, $key);
     }
 
-    public function deleteOptions(array $arrKeys) 
+    public function deleteOptions(array $arrKeys)
     {
         $optsArr = $this->options;
         foreach ($arrKeys as $key) {
@@ -134,16 +136,16 @@ class User extends Authenticatable
         return $this->options = $optsArr;
     }
 
-    public function deleteIg($key) 
+    public function deleteIg($key)
     {
         $arr = $this->igAttrs;
         return $this->igAttrs = $this->deleteKeyValue($arr, $key);
     }
 
-    public function deleteIgs(array $arrKeys) 
+    public function deleteIgs(array $arrKeys)
     {
         $optsArr = $this->igAttrs;
-        foreach ($arrKeys as $key) { 
+        foreach ($arrKeys as $key) {
             $this->deleteKeyValue($optsArr, $key);
         }
         return $this->igAttrs = $optsArr;
@@ -153,7 +155,7 @@ class User extends Authenticatable
     {
         unset($arr[$key]);
         return $arr;
-    } 
+    }
 
     private function deleteKeys(array &$mutatedArray, array $keysToDelete)
     {
@@ -161,9 +163,9 @@ class User extends Authenticatable
             $this->deleteKeyValue($mutatedArray, $key);
         }
         return $mutatedArray;
-    } 
+    }
 
-    public function setIg($key, $value) 
+    public function setIg($key, $value)
     {
         $igAttrs = $this->igAttrs;
         if (!in_array($key, $this->igFields)) {
@@ -175,7 +177,7 @@ class User extends Authenticatable
         return $this->igAttrs = $igAttrs;
     }
 
-    public function setIgs(array $igAttrs) 
+    public function setIgs(array $igAttrs)
     {
         foreach ($igAttrs as $igKey => $igVal) {
             $this->setIg($igKey, $igVal);

@@ -4,8 +4,8 @@ use App\Task;
 
 Route::get('/', 'GuestController@index');
 Route::get('/home', 'AuthController@home');
-Route::get('auth/{provider}', 'Auth\LoginController@redirectToProvider');
-Route::get('auth/{provider}/callback', 'Auth\LoginController@handleProviderCallback');
+Route::get('/auth/instagram', 'Auth\LoginController@authInstagram');
+Route::get('/auth/instagram/callback', 'Auth\LoginController@authInstagramCallback');
 Auth::routes();
 
 /**

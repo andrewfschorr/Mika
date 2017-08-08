@@ -36,7 +36,7 @@ class LoginController extends GuestController
      */
     public function __construct()
     {
-        $this->middleware('guest', ['except' => 'logout']);
+        $this->middleware('guest', ['except' => ['logout', 'authInstagram', 'authInstagramCallback']]);
     }
 
         /**
@@ -70,11 +70,11 @@ class LoginController extends GuestController
     }
 
     /**
-     * Redirect the user to the provider authentication page.
+     * Redirect the user to the Ig authentication page.
      *
      * @return Response
      */
-    public function redirectToProvider($provider)
+    public function authInstagram()
     {
         return Socialite::with('instagram')->redirect();
     }
@@ -84,37 +84,17 @@ class LoginController extends GuestController
      *
      * @return Response
      */
-    public function handleProviderCallback($provider)
+    public function authInstagramCallback()
     {
         try {
-            $user = Socialite::driver($provider)->user();
+            $igUser = Socialite::driver('instagram')->user();
         } catch (Exception $e) {
-            return redirect('auth/'.$provider);
+            return redirect('/'); // TODO Do something!
         }
-
-        $authUser = $this->findOrCreateUser($user, $provider);
-
-        dd($user);
-        //Auth::login($authUser, true);
+        $user = \Auth::user();
+        $user->access_token = $igUser->accessTokenResponseBody['access_token'];
+        $user->setIgs($igUser->accessTokenResponseBody['user']);
+        $user->save();
         return redirect($this->redirectTo);
-    }
-
-
-    /**
-     * Find user based on Oauth details, or create one if none is found.
-     */
-    public function findOrCreateUser($user, $provider)
-    {
-        $authUser = User::where('provider_id', $user->id)->first();
-        if ($authUser) {
-            return $authUser;
-        }
-
-        return User::create([
-            'name'     => $user->name,
-            'email'    => $user->email,
-            'provider' => $provider,
-            'provider_id' => $user->id
-        ]);
     }
 }

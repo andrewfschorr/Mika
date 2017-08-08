@@ -7,10 +7,13 @@
             <div class="panel panel-default">
                 <div class="panel-heading">Dashboard</div>
                 <div class="panel-body">
-                    You are logged in!
+                    <p>You are logged in!</p>
+                    <p>
+                        <a href="/auth/instagram">connect your ig account</a>
+                    </p>
                 </div>
             </div>
         </div>
-    </div> 
+    </div>
 </div>
 @endsection
