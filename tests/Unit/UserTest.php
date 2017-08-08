@@ -16,7 +16,7 @@ class UserTest extends TestCase
         parent::setUp();
         $this->user = factory(User::class)->make();
     }
-    
+
     public function testOptions()
     {
         $this->user->setOption('foo', 'bar');
@@ -27,13 +27,14 @@ class UserTest extends TestCase
         $this->assertEquals($this->user->getOption('foo'), 'bar');
         $this->assertEquals($this->user->getOption('bar'), 99);
         $this->assertEquals($this->user->getOption('angels'), 69);
-        
+
         $this->user->deleteOption('angels');
-        $this->assertEquals($this->user->getOption('angels'), null);
         $this->user->deleteOptions(['foo', 'bar']);
+
+        $this->assertEquals($this->user->getOption('angels'), null);
         $this->assertEquals($this->user->getOption('foo'), null);
         $this->assertEquals($this->user->getOption('bar'), null);
-        
+
         $this->user->deleteOption('dfsf');
         $this->assertEquals($this->user->getOption('dfsf'), null);
 
@@ -46,8 +47,18 @@ class UserTest extends TestCase
             'id' => 12345,
             'username' => 'frankeliuspoopie',
         ]);
+
+        $this->assertEquals($this->user->getIg('id'), 12345);
+        $this->assertEquals($this->user->getIg('username'), 'frankeliuspoopie');
+
+        $this->user->deleteIg('id');
+        $this->user->deleteIgs(['username']);
+
+        $this->assertEquals($this->user->getIg('id'), null);
+        $this->assertEquals($this->user->getIg('username'), null);
+
+        $this->setExpectedException('\Exception');
         $this->user->setIg('thingey', 12345);
-        $this->assertEquals($this->user->getIg('thingey'), null);
     }
 }
 
