@@ -89,7 +89,8 @@ class User extends Authenticatable
         } else {
             $attrs = $this->igAttrs;
         }
-        return $attrs[$key];
+
+        return isset($attrs[$key]) ? $attrs[$key] : null;
     }
 
     public function setOption($key, $val) 
@@ -121,18 +122,46 @@ class User extends Authenticatable
     public function deleteOption($key) 
     {
         $arr = $this->options;
-        unset($arr[$key]);
-        return $this->options = $arr;
+        return $this->options = $this->deleteKeyValue($arr, $key);
     }
 
     public function deleteOptions(array $arrKeys) 
     {
-        $deletedArr = $this->options;
+        $optsArr = $this->options;
         foreach ($arrKeys as $key) {
-            unset($deletedArr[$key]);
+            $this->deleteKeyValue($optsArr, $key);
         }
-        return $this->options = $deletedArr;
+        return $this->options = $optsArr;
     }
+
+    public function deleteIg($key) 
+    {
+        $arr = $this->igAttrs;
+        return $this->igAttrs = $this->deleteKeyValue($arr, $key);
+    }
+
+    public function deleteIgs(array $arrKeys) 
+    {
+        $optsArr = $this->igAttrs;
+        foreach ($arrKeys as $key) { 
+            $this->deleteKeyValue($optsArr, $key);
+        }
+        return $this->igAttrs = $optsArr;
+    }
+
+    private function deleteKeyValue(array &$arr, $key)
+    {
+        unset($arr[$key]);
+        return $arr;
+    } 
+
+    private function deleteKeys(array &$mutatedArray, array $keysToDelete)
+    {
+        foreach ($keysToDelete as $key) {
+            $this->deleteKeyValue($mutatedArray, $key);
+        }
+        return $mutatedArray;
+    } 
 
     public function setIg($key, $value) 
     {
