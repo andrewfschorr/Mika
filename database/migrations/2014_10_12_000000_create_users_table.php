@@ -18,7 +18,8 @@ class CreateUsersTable extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('password');
-            $table->json('igAttrs')->nullable();
+            $table->integer('ig_id')->unique()->nullable();
+            $table->json('ig_attrs')->nullable();
             $table->json('options')->nullable();
             $table->string('access_token')->nullable();
             $table->rememberToken();

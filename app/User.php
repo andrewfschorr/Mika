@@ -56,7 +56,7 @@ class User extends Authenticatable
      * @var array
      */
     protected $casts = [
-        'igAttrs' => 'array',
+        'ig_attrs' => 'array',
         'options' => 'array',
         'access_token' => 'string',
     ];
@@ -68,7 +68,7 @@ class User extends Authenticatable
      */
     protected $attributes = [
         'options' => '{}',
-        'igAttrs' => '{}',
+        'ig_attrs' => '{}',
         'access_token' => '',
     ];
 
@@ -89,7 +89,7 @@ class User extends Authenticatable
         if ($attribute === 'option') {
             $attrs = array_merge($this->default_opts, $this->options);;
         } else {
-            $attrs = $this->igAttrs;
+            $attrs = $this->ig_attrs;
         }
 
         return isset($attrs[$key]) ? $attrs[$key] : null;
@@ -138,17 +138,17 @@ class User extends Authenticatable
 
     public function deleteIg($key)
     {
-        $arr = $this->igAttrs;
-        return $this->igAttrs = $this->deleteKeyValue($arr, $key);
+        $arr = $this->ig_attrs;
+        return $this->ig_attrs = $this->deleteKeyValue($arr, $key);
     }
 
     public function deleteIgs(array $arrKeys)
     {
-        $optsArr = $this->igAttrs;
+        $optsArr = $this->ig_attrs;
         foreach ($arrKeys as $key) {
             $this->deleteKeyValue($optsArr, $key);
         }
-        return $this->igAttrs = $optsArr;
+        return $this->ig_attrs = $optsArr;
     }
 
     private function deleteKeyValue(array &$arr, $key)
@@ -167,22 +167,22 @@ class User extends Authenticatable
 
     public function setIg($key, $value)
     {
-        $igAttrs = $this->igAttrs;
+        $ig_attrs = $this->ig_attrs;
         if (!in_array($key, $this->igFields)) {
             // TODO - Custom exception?
-            throw new \Exception('Can only set keys in igFields on igAttrs');
+            throw new \Exception('Can only set keys in igFields on ig_attrs');
             return; // not needed?
         }
-        $this->setKeyValue($key, $value, $igAttrs);
-        return $this->igAttrs = $igAttrs;
+        $this->setKeyValue($key, $value, $ig_attrs);
+        return $this->ig_attrs = $ig_attrs;
     }
 
-    public function setIgs(array $igAttrs)
+    public function setIgs(array $ig_attrs)
     {
-        foreach ($igAttrs as $igKey => $igVal) {
+        foreach ($ig_attrs as $igKey => $igVal) {
             $this->setIg($igKey, $igVal);
         }
-        return $this->igAttrs;
+        return $this->ig_attrs;
     }
 
     public function __construct(array $attributes = array())

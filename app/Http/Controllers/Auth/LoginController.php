@@ -6,6 +6,7 @@ use App\Http\Controllers\GuestController;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use App\User;
 use Socialite;
+use Validator;
 
 class LoginController extends GuestController
 {
@@ -91,10 +92,22 @@ class LoginController extends GuestController
         } catch (Exception $e) {
             return redirect('/'); // TODO Do something!
         }
-        $user = \Auth::user();
-        $user->access_token = $igUser->accessTokenResponseBody['access_token'];
-        $user->setIgs($igUser->accessTokenResponseBody['user']);
-        $user->save();
-        return redirect($this->redirectTo);
+
+        $validator = Validator::make(['ig_id' => $igUser->accessTokenResponseBody['user']['id']], [
+            'ig_id' => 'required|unique:users',
+        ], [
+            'ig_id.unique' => 'Uh oh, it seems as if someone already connected this instagram to their account.',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect($this->redirectTo)->withErrors($validator, 'connect_ig');
+        } else {
+            $user = \Auth::user();
+            $user->access_token = $igUser->accessTokenResponseBody['access_token'];
+            $user->setIgs($igUser->accessTokenResponseBody['user']);
+            $user->ig_id = $igUser->accessTokenResponseBody['user']['id'];
+            $user->save();
+            return redirect($this->redirectTo);
+        }
     }
 }

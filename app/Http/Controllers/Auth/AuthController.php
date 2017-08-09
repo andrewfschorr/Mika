@@ -23,6 +23,9 @@ class AuthController extends Controller
      */
     public function home()
     {
-        return view('home');
+        $data = [
+            'ig_attrs' => \Auth::user()->ig_attrs,
+        ];
+        return view('home', $data);
     }
 }
