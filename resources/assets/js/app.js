@@ -13,11 +13,25 @@ require('./bootstrap');
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-Vue.component('example', require('./components/Example.vue'));
+// Vue.component('example', require('./components/Example.vue'));
 
-new Vue({
-  el: '#app',
+// const app = new Vue({
+//     el: '.app-thing'
+// });
+
+// console.log('hello');
+Vue.component('todo-item', {
+  props: ['todo'],
+  template: '<li>{{ todo.text }}</li>'
+});
+
+var app7 = new Vue({
+  el: '#app-7',
   data: {
-    message: 'Hello Vue.js!'
+    groceryList: [
+      { id: 0, text: 'Vegetables' },
+      { id: 1, text: 'Cheese' },
+      { id: 2, text: 'Whatever else humans are supposed to eat' }
+    ]
   }
 })
