@@ -23,6 +23,8 @@ class AuthController extends Controller
      */
     public function home()
     {
+        // $this->setContext('auth_thing');
+
         $data = [
             'ig_attrs' => \Auth::user()->ig_attrs,
         ];

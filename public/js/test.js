@@ -63,23 +63,23 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 37);
+/******/ 	return __webpack_require__(__webpack_require__.s = 35);
 /******/ })
 /************************************************************************/
 /******/ ({
 
-/***/ 10:
-/***/ (function(module, exports) {
+/***/ 35:
+/***/ (function(module, exports, __webpack_require__) {
 
-console.log('BONJOUR');
+module.exports = __webpack_require__(9);
+
 
 /***/ }),
 
-/***/ 37:
-/***/ (function(module, exports, __webpack_require__) {
+/***/ 9:
+/***/ (function(module, exports) {
 
-module.exports = __webpack_require__(10);
-
+console.log('BONJOUR');
 
 /***/ })
 
