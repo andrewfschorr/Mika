@@ -49,6 +49,10 @@
                         </p>
                     @endif
                 </div>
+                <div id="app">
+                    @{{ message }}
+                </div>
+
             </div>
         </div>
     </div>
