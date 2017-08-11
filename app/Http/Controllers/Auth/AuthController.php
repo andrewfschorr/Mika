@@ -23,11 +23,8 @@ class AuthController extends Controller
      */
     public function home()
     {
-        // $this->setContext('auth_thing');
-        // $this->viewBag([
-        //     'foo' => 'bar',
-        // ]);
-        $this->foo = 'bar';
+        $this->setContext('test');
+
         $data = [
             'ig_attrs' => \Auth::user()->ig_attrs,
         ];

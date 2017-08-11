@@ -79,8 +79,9 @@
         </nav>
         @yield('content')
     </div>
-
-    <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    @if ($context)
+    <script src="{{ asset(sprintf('js/%s.js', $context)) }}"></script>
+    @endif
 </body>
 </html>
