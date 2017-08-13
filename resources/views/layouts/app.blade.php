@@ -80,7 +80,7 @@
         @yield('content')
     </div>
     <script src="{{ asset('js/app.js') }}"></script>
-    @if ($context)
+    @if (isset($context))
     <script src="{{ asset(sprintf('js/%s.js', $context)) }}"></script>
     @endif
 </body>

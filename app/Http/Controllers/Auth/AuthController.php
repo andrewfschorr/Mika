@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use JavaScript;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -24,6 +25,8 @@ class AuthController extends Controller
     public function home()
     {
         $this->setContext('test');
+
+        JavaScript::put(['foo' => 'bar']);
 
         $data = [
             'ig_attrs' => \Auth::user()->ig_attrs,
