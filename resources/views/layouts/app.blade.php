@@ -23,7 +23,7 @@
 <body>
     <div id="app">
         <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
+            <div class="container-fluid">
                 <div class="navbar-header">
 
                     <!-- Collapsed Hamburger -->
@@ -79,7 +79,7 @@
         </nav>
         @yield('content')
     </div>
-    <script src="{{ asset('js/app.js') }}"></script>
+    <script src="{{ asset('js/vendor.js') }}"></script>
     @if (isset($context))
     <script src="{{ asset(sprintf('js/%s.js', $context)) }}"></script>
     @endif

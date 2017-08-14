@@ -24,13 +24,20 @@ class AuthController extends Controller
      */
     public function home()
     {
-        $this->setContext('test');
-
-        JavaScript::put(['foo' => 'bar']);
-
+        $user = \Auth::user();
+        $this->setContext('home');
         $data = [
-            'ig_attrs' => \Auth::user()->ig_attrs,
+            'ig_attrs' => $user->ig_attrs,
         ];
+        $client_data = [];
+
+        if ($user->access_token) {
+            $client_data['isAuthed'] = true;
+            $client_data['accessToken'] = $user->access_token;
+        }
+        JavaScript::put([
+            'data' => $client_data,
+        ]);
         return view('home', $data);
     }
 }
