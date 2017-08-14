@@ -9,6 +9,5 @@
             </form>
         </div>
         <div class="col-md-12">
-             <my-component></my-component>
              <example></example>
         </div>
