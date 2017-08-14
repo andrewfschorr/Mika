@@ -45,9 +45,7 @@
             </div>
         </div>
     </div>
-    <div class="row">
-        @include ('partials.album-search')
-    </div>
+    @include ('partials.album-search')
     <!-- Not Authed :/ -->
     @else
     <div class="row">

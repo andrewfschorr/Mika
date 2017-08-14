@@ -13,4 +13,6 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .DS_Store
-/.vscode
+.vscode/
+public/css/
+public/js/
