@@ -5,9 +5,9 @@
             <form>
                 <div class="form-group">
                     <label for="album-tag">Tag</label>
-                    <input type="text" class="form-control" v-model="term" :placeholder="term">
+                    <input ref="tagSearchField" type="text" class="form-control" v-model="term" :placeholder="placeHolder">
                 </div>
-                <button type="submit" class="btn btn-default">Search</button>
+                <button type="submit" v-on:click="search" class="btn btn-default">Search</button>
             </form>
         </div>
     </div>
@@ -16,13 +16,22 @@
 <script>
     export default {
         mounted() {
-            console.log('Component mounted.')
+            console.log('Component mounted!')
+            console.log(Mika);
         },
 
         data() {
             return {
-                term: 'hello world',
+                placeHolder: 'enter a tag!',
+                term: '',
             }
+        },
+
+        methods: {
+            search: function(e) {
+                e.preventDefault();
+                console.log(this.term);
+            },
         }
     }
 </script>
