@@ -33,7 +33,6 @@ class AuthController extends Controller
 
         if ($user->access_token) {
             $client_data['isAuthed'] = true;
-            $client_data['accessToken'] = $user->access_token;
         }
         JavaScript::put([
             'data' => $client_data,

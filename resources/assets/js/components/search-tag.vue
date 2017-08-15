@@ -23,14 +23,13 @@
         },
 
         mounted() {
-            this.accessToken = Mika.data.accessToken;
+            console.log('mounted');
         },
 
         data() {
             return {
                 placeHolder: 'enter a tag!',
                 term: '',
-                accessToken: null,
             }
         },
 
@@ -40,16 +39,11 @@
                 if (!this.searchTerm) {
                     return;
                 }
-                console.log(this.searchTerm);
 
-               if (!this.accessToken) {
-                throw new Error('Access token needed');
-               }
-                axios.get(`https://api.instagram.com/v1/tags/${this.searchTerm}/media/recent?access_token=${this.accessToken}&callback=cb`).then(response => {
-                    // JSON responses are automatically parsed.
-                    // console.log(response.data);
+                axios.get(`/search-term/${this.searchTerm}`).then(response => {
+                    console.log(response.data);
                 }).catch(e => {
-                    this.errors.push(e)
+                    console.log(e)
                 })
             },
         },
