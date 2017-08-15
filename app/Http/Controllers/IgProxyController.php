@@ -10,9 +10,10 @@ class IgProxyController extends Controller
 {
     public function index($term)
     {
-        \Log::info($term);
+        $access_token = \Auth::user()->access_token;
         $client = new Client();
-        $res = $client->request('GET', 'https://api.instagram.com/v1/tags/5dmarkii/media/recent?access_token=3749600.deea625.bc441d664eb4494db80375dec79a72c5');
+        $res = $client->request('GET', "https://api.instagram.com/v1/tags/$term/media/recent?access_token=$access_token");
+        \Log::info("https://api.instagram.com/v1/tags/$term/media/recent?access_token=$access_token");
         return $res->getBody();
      }
 }
