@@ -9,7 +9,7 @@
                 </div>
                 <button type="submit" v-on:click="search" class="btn btn-default">Search</button>
             </form>
-            <search-results></search-results>
+            <search-results :taggedImgs="taggedImgs"></search-results>
         </div>
     </div>
 </template>
@@ -22,13 +22,13 @@
             searchResults: searchResults,
         },
 
-        mounted() {
-            console.log('mounted');
-        },
-
         data() {
             return {
                 placeHolder: 'enter a tag!',
+                // taggedImgs: [{
+                //     id: '25',
+                // }],
+                taggedImgs:[],
                 term: '',
             }
         },
@@ -39,11 +39,10 @@
                 if (!this.searchTerm) {
                     return;
                 }
-
                 axios.get(`/search-term/${this.searchTerm}`).then(response => {
-                    console.log(response.data);
+                    this.taggedImgs = response.data.data;
                 }).catch(e => {
-                    console.log(e)
+                    throw new Error(e);
                 })
             },
         },

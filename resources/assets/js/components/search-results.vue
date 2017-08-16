@@ -1,17 +1,25 @@
 <template>
     <div class="results">
-        <figure>
-                <img src="https://developer.cdn.mozilla.net/media/img/mdn-logo-sm.png" alt="An awesome picture">
-            <figcaption>Fig1. MDN Logo!</figcaption>
-        </figure>
+        <ul>
+            <template v-for="img in tagImgs">
+                 <img :src="img.src" alt="">
+            </template>
+        </ul>
     </div>
 </template>
 
 <script>
     export default {
-        mounted() {
-            console.log('Component mounted!')
-            console.log(Mika);
-        },
+        props: ['taggedImgs'],
+        computed: {
+            tagImgs: function() {
+                return this.taggedImgs.map((img) => {
+                    return {
+                        src: _.get(img, 'images.standard_resolution.url', ''),
+                    }
+                });
+
+            },
+        }
     }
 </script>
