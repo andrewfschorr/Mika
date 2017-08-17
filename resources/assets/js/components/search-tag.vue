@@ -25,9 +25,6 @@
         data() {
             return {
                 placeHolder: 'enter a tag!',
-                // taggedImgs: [{
-                //     id: '25',
-                // }],
                 taggedImgs:[],
                 term: '',
             }

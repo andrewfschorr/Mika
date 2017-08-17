@@ -7,3 +7,22 @@
 
 // Bootstrap
 @import "node_modules/bootstrap-sass/assets/stylesheets/bootstrap";
+
+$thumb-width: 200px;
+
+.results{
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+
+    figure {
+        margin-bottom: 50px;
+
+        img {
+            width: $thumb-width;
+        }
+    }
+    .filler {
+        width: $thumb-width;
+    }
+}
