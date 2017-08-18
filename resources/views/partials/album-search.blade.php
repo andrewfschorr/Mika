@@ -1,1 +1,1 @@
-<search-tag></search-tag>
+<div class="app-root"></div>
