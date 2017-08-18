@@ -3,12 +3,28 @@ import ReactDOM from 'react-dom';
 
 class TagSearch extends React.Component {
     state = {
-        tagSearchValue: ''
+        tagSearchValue: '',
+        hasSearched: false,
+        responseImgs: [],
     }
+
     handleChange(e) {
         let searchVal = e.target.value.replace(/-|\ |#|\./g, '')
         this.setState({
             tagSearchValue: searchVal,
+        })
+    }
+
+    searchTag(e){
+        e.preventDefault();
+        axios.get(`/search-term/${this.state.tagSearchValue}`).then(response => {
+            console.log(response.data.data);
+            this.setState({
+                responseImgs: response.data.data,
+                hasSearched: true,
+            })
+        }).catch(e => {
+            throw new Error(e);
         })
     }
 
@@ -22,7 +38,7 @@ class TagSearch extends React.Component {
                             <label htmlFor="album-tag">Tag</label>
                             <input onChange={(e) => this.handleChange(e)} id="album-tag" type="text" className="form-control" placeholder="Enter a tag" />
                         </div>
-                        <button type="submit" className="btn btn-default">Search</button>
+                        <button type="submit" onClick={(e) => this.searchTag(e)} className="btn btn-default">Search</button>
                     </form>
                 </div>
             </div>
