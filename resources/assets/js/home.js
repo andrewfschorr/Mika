@@ -28,6 +28,10 @@ class TagSearch extends React.Component {
         })
     }
 
+    componentWillMount() {
+        console.log(this)
+    }
+
     render() {
         return (
             <div className="row">
@@ -40,9 +44,25 @@ class TagSearch extends React.Component {
                         </div>
                         <button type="submit" onClick={(e) => this.searchTag(e)} className="btn btn-default">Search</button>
                     </form>
+                    {this.state.hasSearched && <SearchResults responseImgs={this.state.responseImgs} />}
                 </div>
             </div>
         );
+    }
+}
+
+class Child extends React.Component {
+    render() {
+        return (<p>woah</p>)
+    }
+}
+
+class SearchResults extends React.Component {
+    render() {
+        console.log(this.props)
+        return (
+            <div>fuck me</div>
+        )
     }
 }
 
