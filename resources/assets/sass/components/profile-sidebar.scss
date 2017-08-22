@@ -1,4 +1,9 @@
-.profile-sidebar .card-img-top  {
-    width: 100%;
-    height: auto;
+.profile-sidebar {
+    .card-img-top  {
+        width: 100%;
+        height: auto;
+    }
+    a.bio-link {
+        word-break: break-all;
+    }
 }

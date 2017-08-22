@@ -1,1 +1,1 @@
-<div class="app-root"></div>
+<div class="app-root col"></div>

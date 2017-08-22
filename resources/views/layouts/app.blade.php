@@ -56,9 +56,7 @@
                 </div>
             </div>
         </header>
-        <div class="container">
-            @yield('content')
-        </div>
+        @yield('content')
     </div>
      <script src="{{ asset('js/vendor.js') }}"></script>
     @if (isset($context))

@@ -9,9 +9,11 @@ export default class TagResults extends React.Component {
             const id = img.id;
             const src = img.images.standard_resolution.url;
             return (
-                <figure key={id} onClick={() => {this.togglePhotoSelection(id)}}>
-                    <img src={src} alt=""/>
-                </figure>
+                <div key={id} className="col-4">
+                    <figure onClick={() => {this.togglePhotoSelection(id)}}>
+                        <img src={src} alt=""/>
+                    </figure>
+                </div>
             )
 
         });
@@ -20,7 +22,6 @@ export default class TagResults extends React.Component {
         return (
             <div className="results">
                 {tagImgs}
-                <p className="filler"></p><p className="filler"></p><p className="filler"></p><p className="filler"></p>
             </div>
         )
     }
