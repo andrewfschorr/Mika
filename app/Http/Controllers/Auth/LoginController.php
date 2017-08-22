@@ -110,4 +110,11 @@ class LoginController extends GuestController
             return redirect($this->redirectTo);
         }
     }
+
+
+    public function showLoginForm()
+    {
+        $this->setContext('login');
+        return view('auth.login');
+    }
 }

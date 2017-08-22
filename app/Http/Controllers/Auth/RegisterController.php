@@ -68,4 +68,10 @@ class RegisterController extends GuestController
             'password' => bcrypt($data['password']),
         ]);
     }
+
+    public function showRegistrationForm()
+    {
+        $this->setContext('register');
+        return view('auth.register');
+    }
 }
