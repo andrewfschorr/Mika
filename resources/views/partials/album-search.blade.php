@@ -1,1 +1,1 @@
-<div class="app-root col"></div>
+<div class="app-root col-sm-9"></div>
