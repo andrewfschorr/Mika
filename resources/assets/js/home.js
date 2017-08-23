@@ -37,7 +37,7 @@ class ReturnedPhotos extends React.Component {
     render() {
         let photos;
         if (!this.props.photoResponse.length) {
-            photos = <h3>Oops, sorry, nothing here</h3>;
+            photos = <h3 className="col">Oops, sorry, nothing here</h3>;
         } else {
             photos = this.props.photoResponse.map((img, idx) => {
                 const id = img.id;
