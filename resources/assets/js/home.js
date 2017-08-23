@@ -34,6 +34,10 @@ class TagSearch extends React.Component {
 
 class ReturnedPhotos extends React.Component {
 
+    shouldComponentUpdate(nextProps, nextState) {
+        return nextProps.photoResponse !== this.props.photoResponse;
+    }
+
     render() {
         let photos;
         if (!this.props.photoResponse.length) {
@@ -53,7 +57,7 @@ class ReturnedPhotos extends React.Component {
             });
         }
         return (
-            <div className="row">
+            <div className="row photo-results">
                 {photos}
             </div>
         );
@@ -76,6 +80,7 @@ class CreateAlbum extends React.Component {
         this.state = {
             searchTerm: '',
             responseImgs: [],
+            hasSearched: false,
         };
     }
 
