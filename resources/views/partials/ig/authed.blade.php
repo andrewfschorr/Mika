@@ -22,6 +22,22 @@
                     @endif
                 </ul>
             </div>
+            <hr>
+            <h5>Albums</h5>
+            <ul class="list-group">
+                <li class="list-group-item justify-content-between">
+                    Cras justo odio
+                    <span class="badge badge-default badge-pill">14</span>
+                </li>
+                <li class="list-group-item justify-content-between">
+                    Dapibus ac facilisis in
+                    <span class="badge badge-default badge-pill">2</span>
+                </li>
+                <li class="list-group-item justify-content-between">
+                    Morbi leo risus
+                    <span class="badge badge-default badge-pill">1</span>
+                </li>
+            </ul>
         </div>
         @include ('partials.album-search')
     <div>
