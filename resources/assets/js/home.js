@@ -89,7 +89,6 @@ class ReturnedPhotos extends React.Component {
         if (!this.props.photoResponse.length) {
             photos = <div className="col">
                 <h3>Oops sorry, no results found</h3>
-                <button className="btn btn-primary" onClick={() => this.reset()}>Try again</button>
             </div>
         } else {
             photos = this.props.photoResponse.map((img, idx) => {
@@ -112,6 +111,9 @@ class ReturnedPhotos extends React.Component {
                 </div>
                 <h6 className="col-12"><strong>{this.props.searchTerm}</strong> tagged photos:</h6>
                 {photos}
+                <div className="col-12">
+                    <button className="btn btn-primary" onClick={() => this.reset()}>Search again</button>
+                </div>
             </div>
         );
     }
