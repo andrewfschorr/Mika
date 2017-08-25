@@ -41,13 +41,15 @@ class SelectedPhotos extends React.Component {
     render() {
         if (!this.props.hasSearched || !this.props.photoResponse.length) return null;
 
-        let selectedImgs;
+        let selectedImgs,
+            makeAlbumBtn = null;
         if (!this.props.selectedImgs.length) {
             selectedImgs = <h3 className="col">Oh noe! Empty album 😰.</h3>;
         } else {
             selectedImgs = this.props.selectedImgs.map((img, idx) => {
                 const id = img.id;
                 const src = img.images.standard_resolution.url;
+                makeAlbumBtn = <h6 className="col-12"><button className="btn btn-success">Make album!</button></h6>;
                 return (
                     <div className="col-sm-3" key={id}>
                     <figure className="photo-grid" onClick={() => {this.togglePhotoSelection(id)}}>
@@ -64,6 +66,7 @@ class SelectedPhotos extends React.Component {
                     Currently selected photos:
                 </h6>
                 {selectedImgs}
+                {makeAlbumBtn}
             </div>
         );
     }
