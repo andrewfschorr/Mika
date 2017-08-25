@@ -130,6 +130,8 @@ class CreateAlbum extends React.Component {
             hasSearched: false,
         };
 
+        this.selectedImgsMap = {};
+
         this.originalState = _.clone(this.state);
     }
 
@@ -153,12 +155,27 @@ class CreateAlbum extends React.Component {
     }
 
     togglePhotoSelection(id) {
-        const addedPhoto = _.find(this.state.responseImgs, (img) => {
-            return img.id === id;
+        let addedPhoto,
+            newImagesState;
+
+        if (this.selectedImgsMap[id] === undefined) {
+            addedPhoto = _.find(this.state.responseImgs, (img) => {
+                return img.id === id;
+            });
+            this.selectedImgsMap[id] = true;
+            newImagesState = this.state.selectedImgs.concat(addedPhoto);
+        } else {
+            addedPhoto = _.findIndex(this.state.selectedImgs, (img) => {
+                return img.id === id;
+            });
+            this.state.selectedImgs.splice(addedPhoto, 1);
+            newImagesState = this.state.selectedImgs;
+            delete this.selectedImgsMap[id];
+        }
+
+        this.setState({
+            selectedImgs: newImagesState,
         });
-        this.setState((state) => ({
-            selectedImgs: state.selectedImgs.concat(addedPhoto)
-        }));
     }
 
     reset() {
