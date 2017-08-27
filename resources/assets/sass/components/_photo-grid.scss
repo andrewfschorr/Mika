@@ -1,5 +1,28 @@
-.photo-grid{
-    img {
-        width: 100%;;
+.photo-grid-item{
+    $font-size-item: 16x;
+
+    .photo-item {
+        position: relative;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    &.selected {
+        .glyphicon {
+            width: $font-size-item;
+            height: $font-size-item;
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            font-size: $font-size-item;
+            cursor: pointer;
+            display: none;
+        }
+
+        &:hover .glyphicon {
+            display: block;
+        }
     }
 }

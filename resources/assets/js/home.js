@@ -38,6 +38,12 @@ class TagSearch extends React.Component {
 }
 
 class SelectedPhotos extends React.Component {
+
+    togglePhotoSelection(id) {
+        console.log(this);
+        console.log(id);
+    }
+
     render() {
         if (!this.props.hasSearched || !this.props.photoResponse.length) return null;
 
@@ -51,8 +57,9 @@ class SelectedPhotos extends React.Component {
                 const src = img.images.standard_resolution.url;
                 makeAlbumBtn = <h6 className="col-12"><button className="btn btn-success">Make album!</button></h6>;
                 return (
-                    <div className="col-sm-3" key={id}>
-                    <figure className="photo-grid" onClick={() => {this.togglePhotoSelection(id)}}>
+                    <div className="col-sm-3 photo-grid-item selected" key={id}>
+                        <figure className="photo-item">
+                            <span className="glyphicon glyphicon-remove" aria-hidden="true" onClick={() => {this.togglePhotoSelection(id)}}></span>
                             <img src={src} alt=""/>
                         </figure>
                     </div>
@@ -98,8 +105,8 @@ class ReturnedPhotos extends React.Component {
                 const id = img.id;
                 const src = img.images.standard_resolution.url;
                 return (
-                    <div className="col-sm-3" key={id}>
-                    <figure className="photo-grid" onClick={() => {this.togglePhotoSelection(id)}}>
+                    <div className="col-sm-3 photo-grid-item" key={id}>
+                        <figure className="photo-item" onClick={() => {this.togglePhotoSelection(id)}}>
                             <img src={src} alt=""/>
                         </figure>
                     </div>
