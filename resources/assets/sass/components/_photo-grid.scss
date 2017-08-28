@@ -1,5 +1,5 @@
 .photo-grid-item{
-    $font-size-item: 16x;
+    $font-size-item: 13px;
 
     .photo-item {
         position: relative;
@@ -9,20 +9,35 @@
         }
     }
 
-    &.selected {
+    .glyphicon {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        font-size: $font-size-item;
+        cursor: pointer;
+        padding: 5px;
+        color:$white;
+
+    }
+
+    &.album-item {
+
         .glyphicon {
-            width: $font-size-item;
-            height: $font-size-item;
-            position: absolute;
-            top: -3px;
-            right: -3px;
-            font-size: $font-size-item;
-            cursor: pointer;
+            background: $green;
             display: none;
         }
-
-        &:hover .glyphicon {
+        &:hover .glyphicon{
             display: block;
+        }
+    }
+
+    &.returned-photo {
+
+        cursor: pointer;
+        .glyphicon {
+            background: $blue;
+            display: block;
+            cursor: default;
         }
     }
 }

@@ -11264,19 +11264,33 @@ a.text-gray-dark:hover {
   width: 100%;
 }
 
-.photo-grid-item.selected .glyphicon {
-  width: 16x;
-  height: 16x;
+.photo-grid-item .glyphicon {
   position: absolute;
-  top: -3px;
-  right: -3px;
-  font-size: 16x;
+  top: -8px;
+  right: -8px;
+  font-size: 13px;
   cursor: pointer;
+  padding: 5px;
+  color: #fff;
+}
+
+.photo-grid-item.album-item .glyphicon {
+  background: #5cb85c;
   display: none;
 }
 
-.photo-grid-item.selected:hover .glyphicon {
+.photo-grid-item.album-item:hover .glyphicon {
   display: block;
+}
+
+.photo-grid-item.returned-photo {
+  cursor: pointer;
+}
+
+.photo-grid-item.returned-photo .glyphicon {
+  background: #0275d8;
+  display: block;
+  cursor: default;
 }
 
 .navbar {

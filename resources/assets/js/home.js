@@ -40,8 +40,11 @@ class TagSearch extends React.Component {
 class SelectedPhotos extends React.Component {
 
     togglePhotoSelection(id) {
-        console.log(this);
-        console.log(id);
+        this.props.togglePhotoSelection(id);
+    }
+
+    makeAlbum(id) {
+        this.props.makeAlbum(id);
     }
 
     render() {
@@ -55,11 +58,11 @@ class SelectedPhotos extends React.Component {
             selectedImgs = this.props.selectedImgs.map((img, idx) => {
                 const id = img.id;
                 const src = img.images.standard_resolution.url;
-                makeAlbumBtn = <h6 className="col-12"><button className="btn btn-success">Make album!</button></h6>;
+                makeAlbumBtn = <h6 className="col-12"><button className="btn btn-success" onClick={() => {this.makeAlbum(id)}}>Make album!</button></h6>;
                 return (
-                    <div className="col-sm-3 photo-grid-item selected" key={id}>
+                    <div className="col-sm-3 photo-grid-item album-item" key={id}>
                         <figure className="photo-item">
-                            <span className="glyphicon glyphicon-remove" aria-hidden="true" onClick={() => {this.togglePhotoSelection(id)}}></span>
+                            <span className="glyphicon glyphicon-remove rounded-circle" aria-hidden="true" onClick={() => {this.togglePhotoSelection(id)}}></span>
                             <img src={src} alt=""/>
                         </figure>
                     </div>
@@ -81,10 +84,6 @@ class SelectedPhotos extends React.Component {
 
 class ReturnedPhotos extends React.Component {
 
-    shouldComponentUpdate(nextProps, nextState) {
-        return nextProps.photoResponse !== this.props.photoResponse;
-    }
-
     togglePhotoSelection(id) {
         this.props.togglePhotoSelection(id);
     }
@@ -105,13 +104,14 @@ class ReturnedPhotos extends React.Component {
                 const id = img.id;
                 const src = img.images.standard_resolution.url;
                 return (
-                    <div className="col-sm-3 photo-grid-item" key={id}>
+                    <div className="col-sm-3 photo-grid-item returned-photo" key={id}>
                         <figure className="photo-item" onClick={() => {this.togglePhotoSelection(id)}}>
+                            {img.isSelected ? <span className="glyphicon glyphicon-ok rounded-circle" aria-hidden="true"></span>
+                                : null}
                             <img src={src} alt=""/>
                         </figure>
                     </div>
                 );
-
             });
         }
         return (
@@ -120,7 +120,7 @@ class ReturnedPhotos extends React.Component {
                     <hr/>
                 </div>
                 <h6 className="col-12"><strong>{this.props.searchTerm}</strong> tagged photos:</h6>
-                {photos}
+                 {photos}
                 <div className="col-12">
                     <button className="btn btn-primary" onClick={() => this.reset()}>Search again</button>
                 </div>
@@ -164,31 +164,55 @@ class CreateAlbum extends React.Component {
         })
     }
 
+    makeAlbum(id) {
+        console.log(id);
+        console.log(this);
+    }
+
     togglePhotoSelection(id) {
-        let addedPhoto,
+        let toggledPhoto,
             newImagesState;
 
+        // add/remove to the selectedImgs State
         if (this.selectedImgsMap[id] === undefined) {
-            addedPhoto = _.find(this.state.responseImgs, (img) => {
+            // add to selectedImgs
+            toggledPhoto = _.find(this.state.responseImgs, (img) => {
                 return img.id === id;
             });
             this.selectedImgsMap[id] = true;
-            newImagesState = this.state.selectedImgs.concat(addedPhoto);
+            newImagesState = this.state.selectedImgs.concat(toggledPhoto);
+            // add isSelected attribute
+            toggledPhoto.isSelected = true;
+
         } else {
-            addedPhoto = _.findIndex(this.state.selectedImgs, (img) => {
-                return img.id === id;
+            // TODO - maybe better way than 0(2*n) with 2 loops(?)
+            // remove from selectedImgs
+            _.each(this.state.selectedImgs, (photo, idx) => {
+                if (photo.id === id) {
+                    this.state.selectedImgs.splice(idx, 1);
+                    return false;
+                }
             });
-            this.state.selectedImgs.splice(addedPhoto, 1);
             newImagesState = this.state.selectedImgs;
+            // remove the isSelected = true attribute
             delete this.selectedImgsMap[id];
+            // remove from the selectedImgsMap
+            _.each(this.state.responseImgs, (photo, idx) => {
+                if (photo.id === id) {
+                    delete photo.isSelected;
+                    return false;
+                }
+            });
         }
 
         this.setState({
             selectedImgs: newImagesState,
+            responseImgs: this.state.responseImgs,
         });
     }
 
     reset() {
+        this.selectedImgsMap = {};
         this.setState(this.originalState);
     }
 
@@ -205,6 +229,8 @@ class CreateAlbum extends React.Component {
                     hasSearched={this.state.hasSearched}
                     selectedImgs={this.state.selectedImgs}
                     photoResponse={this.state.responseImgs}
+                    togglePhotoSelection={this.togglePhotoSelection.bind(this)}
+                    makeAlbum={this.makeAlbum.bind(this)}
                  />
                 <ReturnedPhotos
                     photoResponse={this.state.responseImgs}
