@@ -79,6 +79,11 @@ class User extends Authenticatable
         'fo' => 'this will always be included',
     ];
 
+    public function __construct(array $attributes = array())
+    {
+        parent::__construct($attributes);
+    }
+
     private function setKeyValue($key, $value, array &$arr)
     {
         return $arr[$key] = $value;
@@ -168,13 +173,12 @@ class User extends Authenticatable
     public function setIg($key, $value)
     {
         $ig_attrs = $this->ig_attrs;
-        if (!in_array($key, $this->igFields)) {
-            // TODO - Custom exception?
-            throw new \Exception('Can only set keys in igFields on ig_attrs');
-            return; // not needed?
+        if (in_array($key, $this->igFields)) {
+            // used to throw, when field was not in array
+            // now realized when Ig adds fields to sccess response it will error
+            $this->setKeyValue($key, $value, $ig_attrs);
+            return $this->ig_attrs = $ig_attrs;
         }
-        $this->setKeyValue($key, $value, $ig_attrs);
-        return $this->ig_attrs = $ig_attrs;
     }
 
     public function setIgs(array $ig_attrs)
@@ -185,8 +189,8 @@ class User extends Authenticatable
         return $this->ig_attrs;
     }
 
-    public function __construct(array $attributes = array())
+    public function albums()
     {
-        parent::__construct($attributes);
+        return $this->hasMany('App\Album');
     }
 }

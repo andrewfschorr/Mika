@@ -146,7 +146,7 @@ class CreateAlbum extends React.Component {
     }
 
     handleSearchChange(searchVal) {
-        searchVal = searchVal.replace(/-|\ |#|\./g, '');
+        searchVal = searchVal.replace(/[^0-9a-z]/gi, '');
         this.setState({
             searchTerm: searchVal,
         });
@@ -165,12 +165,18 @@ class CreateAlbum extends React.Component {
     }
 
     makeAlbum(id) {
+        if (!this.state.selectedImgs.length || !this.state.searchTerm) {
+            return;
+        }
+
         const selectedImgs = [];
         _.each(this.state.selectedImgs, (img) => {
             selectedImgs.push(img.images.standard_resolution.url);
         });
+
         axios.post('/createalbum', {
             imgs: selectedImgs,
+            name: this.state.searchTerm,
         }).then((resp) => {
 
         }).catch((err) => {

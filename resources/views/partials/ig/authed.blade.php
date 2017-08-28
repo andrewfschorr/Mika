@@ -24,20 +24,20 @@
             </div>
             <hr>
             <h5>Albums</h5>
-            <ul class="list-group">
-                <li class="list-group-item justify-content-between">
-                    Cras justo odio
-                    <span class="badge badge-default badge-pill">14</span>
-                </li>
-                <li class="list-group-item justify-content-between">
-                    Dapibus ac facilisis in
-                    <span class="badge badge-default badge-pill">2</span>
-                </li>
-                <li class="list-group-item justify-content-between">
-                    Morbi leo risus
-                    <span class="badge badge-default badge-pill">1</span>
-                </li>
-            </ul>
+            @if (!count($albums))
+                <div class="alert alert-warning" role="alert">
+                    <strong>🙊 G'ahead</strong> upload an album.
+                </div>
+            @else
+                <ul class="list-group">
+                @foreach ($albums as $album)
+                    <li class="list-group-item justify-content-between">
+                        {{ $album->name }}
+                        <span class="badge badge-default badge-pill">{{ count($album->images) }}</span>
+                    </li>
+                @endforeach
+                </ul>
+            @endif
         </div>
         @include ('partials.album-search')
     <div>
