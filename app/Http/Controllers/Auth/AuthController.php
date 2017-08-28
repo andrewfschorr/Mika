@@ -39,4 +39,9 @@ class AuthController extends Controller
         ]);
         return view('home', $data);
     }
+
+    public function makeAlbum(Request $request)
+    {
+        \Log::info($request->input('imgs'));
+    }
 }

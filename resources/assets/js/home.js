@@ -161,12 +161,21 @@ class CreateAlbum extends React.Component {
             })
         }).catch(e => {
             throw new Error(e);
-        })
+        });
     }
 
     makeAlbum(id) {
-        console.log(id);
-        console.log(this);
+        const selectedImgs = [];
+        _.each(this.state.selectedImgs, (img) => {
+            selectedImgs.push(img.images.standard_resolution.url);
+        });
+        axios.post('/createalbum', {
+            imgs: selectedImgs,
+        }).then((resp) => {
+
+        }).catch((err) => {
+
+        });
     }
 
     togglePhotoSelection(id) {
