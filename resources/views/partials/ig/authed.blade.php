@@ -32,7 +32,10 @@
                 <ul class="list-group">
                 @foreach ($albums as $album)
                     <li class="list-group-item justify-content-between">
-                        {{ $album->name }}
+                        <!-- TODO get this strtolower out of template -->
+                        <a href="{{$ig_username}}/{{strtolower($album->display_name)}}">
+                            {{ $album->display_name }}
+                        </a>
                         <span class="badge badge-default badge-pill">{{ count($album->images) }}</span>
                     </li>
                 @endforeach

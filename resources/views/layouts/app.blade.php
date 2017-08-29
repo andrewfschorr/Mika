@@ -32,10 +32,10 @@
                     <ul class="navbar-nav">
                         @if (Auth::guest())
                             <li class="nav-item">
-                                <a class="nav-link {{isset($context) && $context === 'login' ? 'active' : ''}}" href="{{ route('login') }}">Login</a>
+                                <a class="nav-link {{isset($selected_page) && $selected_page === 'login' ? 'active' : ''}}" href="{{ route('login') }}">Login</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{isset($context) && $context === 'register' ? 'active' : ''}}" href="{{ route('register') }}">Register</a>
+                                <a class="nav-link {{isset($selected_page) && $selected_page === 'register' ? 'active' : ''}}" href="{{ route('register') }}">Register</a>
                             </li>
                         @else
                             <li class="nav-item dropdown">
@@ -58,9 +58,14 @@
         </header>
         @yield('content')
     </div>
-     <script src="{{ asset('js/vendor.js') }}"></script>
+    @if (isset($dataBootstrap))
+    <script id="{!! $dataBootstrap['name'] !!}-data-bootstrap">
+        var {!! $dataBootstrap['name'] !!} = {!! json_encode($dataBootstrap['data']) !!};
+    </script>
+    @endif
+    <script src="{{ asset('js/vendor.js') }}"></script>
     @if (isset($context))
-    <script src="{{ asset(sprintf('js/%s.js', $context)) }}"></script>
+        <script src="{{ asset(sprintf('js/%s.js', $context)) }}"></script>
     @endif
 </body>
 </html>

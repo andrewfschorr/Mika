@@ -1,5 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import getBootstrap from './components/get-bootstrap';
 
 class TagSearch extends React.Component {
     constructor(props) {
@@ -165,9 +166,9 @@ class CreateAlbum extends React.Component {
     }
 
     makeAlbum(id) {
-        if (!this.state.selectedImgs.length || !this.state.searchTerm) {
-            return;
-        }
+        // if (!this.state.selectedImgs.length || !this.state.searchTerm) {
+        //     return;
+        // }
 
         const selectedImgs = [];
         _.each(this.state.selectedImgs, (img) => {
@@ -263,3 +264,5 @@ ReactDOM.render(
   <CreateAlbum/>,
   document.getElementsByClassName('app-root')[0]
 );
+
+// console.log(getBootstrap('home'));

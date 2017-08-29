@@ -15,4 +15,12 @@ class Controller extends BaseController
     {
         view()->share('context', $context);
     }
+
+    public function dataBootstrap($name, array $bootstrap)
+    {
+        view()->share('dataBootstrap', [
+            'name' => $name,
+            'data' => $bootstrap,
+        ]);
+    }
 }

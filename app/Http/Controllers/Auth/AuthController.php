@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use JavaScript;
+use Validator;
+use App\Album;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
@@ -29,17 +31,21 @@ class AuthController extends Controller
         $data = [
             'ig_attrs' => $user->ig_attrs,
             'albums' => $user->albums,
+            'ig_username' => $user->getIg('username')
         ];
-
-        $client_data = [];
-
-        if ($user->access_token) {
-            $client_data['isAuthed'] = true;
-        }
-        JavaScript::put([
-            'data' => $client_data,
-        ]);
         return view('home', $data);
+        // $this->dataBootstrap('home' , [
+        //     'foo' => 'bar',
+        // ]);
+
+        // This works too ¯\_(ツ)_/¯
+        // TODO - Delete if not needed?
+        // JavaScript::put([
+        //     'home' => [
+        //         'client_data' => $client_data,
+        //         'foo' => 'bar'
+        //     ];
+        // ]);
     }
 
     public function makeAlbum(Request $request)
@@ -56,31 +62,35 @@ class AuthController extends Controller
         $album_name = $user->name . '-' . strtolower($name);
         $display_name = $name;
 
-        \Log::info($images);
-        \Log::info($album_name);
-        \Log::info($display_name);
+        $data = compact('images', 'album_name', 'display_name');
 
-        // return Album::create([
-        //     'name' => $data['name'],
-        //     'email' => $data['email'],
-        //     'password' => bcrypt($data['password']),
-        // ]);
+        $validator = Validator::make(
+            $data,
+            [
+                'album_name' => 'required|unique:albums',
+                'images' => 'present|array',
+            ],
+            [
+                // because ajax, don't think these are in use
+                'album_name.unique' => 'Uh oh, Somethings up... Our engineers have been alerted :/',
+                'images' => 'Uh oh, Somethings up... Our engineers have been alerted :/',
+            ]
+        );
 
-        // $validator = Validator::make(['ig_id' => $igUser->accessTokenResponseBody['user']['id']], [
-        //     'ig_id' => 'required|unique:users',
-        // ], [
-        //     'ig_id.unique' => 'Uh oh, it seems as if someone already connected this instagram to their account.',
-        // ]);
-
-        // if ($validator->fails()) {
-        //     return redirect($this->redirectTo)->withErrors($validator, 'connect_ig');
-        // } else {
-        //     $user = \Auth::user();
-        //     $user->access_token = $igUser->accessTokenResponseBody['access_token'];
-        //     $user->setIgs($igUser->accessTokenResponseBody['user']);
-        //     $user->ig_id = $igUser->accessTokenResponseBody['user']['id'];
-        //     $user->save();
-        //     return redirect($this->redirectTo);
-        // }
+        if ($validator->fails()) {
+            // TODO return error code and flash error message on front end
+            // return redirect('/')->withErrors($validator, 'make_album');
+        } else {
+            try {
+                Album::create([
+                    'album_name' => $data['album_name'],
+                    'display_name' => $data['display_name'],
+                    'images' => $data['images'],
+                    'user_id' => $user->id,
+                ]);
+            } catch (\Illuminate\Database\QueryException $exception) {
+                // TODO return error code and flash error message on front end
+            }
+        }
     }
 }

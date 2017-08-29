@@ -71,7 +71,9 @@ class RegisterController extends GuestController
 
     public function showRegistrationForm()
     {
-        $this->setContext('register');
-        return view('auth.register');
+        $data = [
+            'selected_page' => 'register',
+        ];
+        return view('auth.register', $data);
     }
 }

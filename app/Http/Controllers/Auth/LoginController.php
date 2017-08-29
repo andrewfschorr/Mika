@@ -92,12 +92,18 @@ class LoginController extends GuestController
         } catch (Exception $e) {
             return redirect('/'); // TODO Do something!
         }
-
-        $validator = Validator::make(['ig_id' => $igUser->accessTokenResponseBody['user']['id']], [
-            'ig_id' => 'required|unique:users',
-        ], [
-            'ig_id.unique' => 'Uh oh, it seems as if someone already connected this instagram to their account.',
-        ]);
+        // $validator = Validator::make($input, $rules, $messages);
+        $validator = Validator::make(
+            [
+                'ig_id' => $igUser->accessTokenResponseBody['user']['id']
+            ],
+            [
+                'ig_id' => 'required|unique:users',
+            ],
+            [
+                'ig_id.unique' => 'Uh oh, it seems as if someone already connected this instagram to their account.',
+            ]
+        );
 
         if ($validator->fails()) {
             return redirect($this->redirectTo)->withErrors($validator, 'connect_ig');
@@ -114,7 +120,9 @@ class LoginController extends GuestController
 
     public function showLoginForm()
     {
-        $this->setContext('login');
-        return view('auth.login');
+        $data = [
+            'selected_page' => 'login',
+        ];
+        return view('auth.login', $data);
     }
 }
