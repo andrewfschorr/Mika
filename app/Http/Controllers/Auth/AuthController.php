@@ -48,7 +48,7 @@ class AuthController extends Controller
         // ]);
     }
 
-    public function makeAlbum(Request $request)
+    public function createAlbum(Request $request)
     {
         $user = \Auth::user();
         $images = [];
@@ -59,7 +59,7 @@ class AuthController extends Controller
         }
 
         $name = $request->input('name');
-        $album_name = $user->name . '-' . strtolower($name);
+        $album_name = $user->getIg('name') . '-' . strtolower($name);
         $display_name = $name;
 
         $data = compact('images', 'album_name', 'display_name');
@@ -72,25 +72,33 @@ class AuthController extends Controller
             ],
             [
                 // because ajax, don't think these are in use
-                'album_name.unique' => 'Uh oh, Somethings up... Our engineers have been alerted :/',
+                'album_name.unique' => 'Sorry, can only have one album per hashtag.',
                 'images' => 'Uh oh, Somethings up... Our engineers have been alerted :/',
             ]
         );
 
         if ($validator->fails()) {
-            // TODO return error code and flash error message on front end
+            return response()->json([
+                'error_msg' => $validator->errors()->all()
+            ], 400);
             // return redirect('/')->withErrors($validator, 'make_album');
         } else {
             try {
-                Album::create([
+                $album = Album::create([
                     'album_name' => $data['album_name'],
                     'display_name' => $data['display_name'],
                     'images' => $data['images'],
                     'user_id' => $user->id,
                 ]);
             } catch (\Illuminate\Database\QueryException $exception) {
-                // TODO return error code and flash error message on front end
+                return response()->json([
+                    'error_msg' => 'Uh oh, Somethings up... Our engineers have been alerted :/'
+                ], 400);
             }
+
+            return response()->json([
+                'success' => 'success'
+            ], 200);
         }
     }
 }

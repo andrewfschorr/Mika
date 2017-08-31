@@ -2,6 +2,21 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import getBootstrap from './components/get-bootstrap';
 
+class Errors extends React.Component {
+    constructor(props) {
+        super(props)
+    }
+    render() {
+        {return this.props.errors.length ? <div className="errors">
+            {this.props.errors.map((error, idx) => {
+                return <div className="alert alert-danger" role="alert" key={idx}>
+                    {error}
+                </div>
+            })}
+        </div>  : null}
+    }
+}
+
 class TagSearch extends React.Component {
     constructor(props) {
         super(props);
@@ -138,6 +153,7 @@ class CreateAlbum extends React.Component {
             searchTerm: '',
             responseImgs: [],
             selectedImgs: [],
+            errors: [],
             hasSearched: false,
         };
 
@@ -159,16 +175,16 @@ class CreateAlbum extends React.Component {
             this.setState({
                 hasSearched: true,
                 responseImgs: response.data.data,
-            })
+            });
         }).catch(e => {
             throw new Error(e);
         });
     }
 
     makeAlbum(id) {
-        // if (!this.state.selectedImgs.length || !this.state.searchTerm) {
-        //     return;
-        // }
+        if (!this.state.selectedImgs.length || !this.state.searchTerm) {
+            return;
+        }
 
         const selectedImgs = [];
         _.each(this.state.selectedImgs, (img) => {
@@ -179,9 +195,11 @@ class CreateAlbum extends React.Component {
             imgs: selectedImgs,
             name: this.state.searchTerm,
         }).then((resp) => {
-
+            console.log(resp);
         }).catch((err) => {
-
+            this.setState({
+                errors: err.response.data.error_msg,
+            });
         });
     }
 
@@ -235,6 +253,9 @@ class CreateAlbum extends React.Component {
     render() {
         return (
             <div>
+                <Errors
+                    errors={this.state.errors}
+                />
                 <TagSearch
                     handleSearchChange={this.handleSearchChange.bind(this)}
                     handleSearchTerm={this.handleSearchTerm.bind(this)}
@@ -264,5 +285,3 @@ ReactDOM.render(
   <CreateAlbum/>,
   document.getElementsByClassName('app-root')[0]
 );
-
-// console.log(getBootstrap('home'));

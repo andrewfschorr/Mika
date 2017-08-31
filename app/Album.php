@@ -13,4 +13,9 @@ class Album extends Model
     protected $casts = [
         'images' => 'array',
     ];
+
+    public function getLcNameAttribute($value)
+    {
+        return strtolower($this->display_name);
+    }
 }
