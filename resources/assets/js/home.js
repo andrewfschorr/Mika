@@ -195,7 +195,7 @@ class CreateAlbum extends React.Component {
             imgs: selectedImgs,
             name: this.state.searchTerm,
         }).then((resp) => {
-            console.log(resp);
+            window.location.href = `/edit/${_.get(resp, 'data.igName', '')}/${_.get(resp, 'data.lcAlbumName', '')}`;
         }).catch((err) => {
             this.setState({
                 errors: err.response.data.error_msg,

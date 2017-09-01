@@ -26,14 +26,14 @@
             <h5>Albums</h5>
             @if (!count($albums))
                 <div class="alert alert-warning" role="alert">
-                    <strong>🙊 G'ahead</strong> upload an album.
+                    <strong>🙊 G'ahead</strong> make your first album.
                 </div>
             @else
                 <ul class="list-group">
                 @foreach ($albums as $album)
                     <li class="list-group-item justify-content-between">
-                         <a href="edit/{{$ig_username}}/{{strtolower($album->display_name)}}">
-                            {{ $album->lc_name }}
+                         <a href="/edit/{{$ig_username}}/{{$album->lc_album_name}}">
+                            {{ $album->display_name }}
                         </a>
                         <span class="badge badge-default badge-pill">{{ count($album->images) }}</span>
                     </li>

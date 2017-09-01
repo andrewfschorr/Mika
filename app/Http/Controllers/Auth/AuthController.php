@@ -31,20 +31,10 @@ class AuthController extends Controller
         $this->setupData(); // this cant go in construct
         $this->setContext('home');
 
-        // TODO put it it's own static method
         $this->dataBootstrap('home' , [
             'igUsername' => $this->user->is_ig_authed,
         ]);
-
         return view('home', $this->data);
-        // This works too ¯\_(ツ)_/¯
-        // TODO - Delete JS vendor pacakge if not needed?
-        // JavaScript::put([
-        //     'home' => [
-        //         'client_data' => $client_data,
-        //         'foo' => 'bar'
-        //     ];
-        // ]);
     }
 
     public function editAlbum(Request $request, $user, $album)

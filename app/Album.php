@@ -14,7 +14,7 @@ class Album extends Model
         'images' => 'array',
     ];
 
-    public function getLcNameAttribute($value)
+    public function getLcAlbumNameAttribute($value)
     {
         return strtolower($this->display_name);
     }

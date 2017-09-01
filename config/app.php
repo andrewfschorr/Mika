@@ -178,7 +178,7 @@ return [
         App\Providers\RouteServiceProvider::class,
 
         \SocialiteProviders\Manager\ServiceProvider::class,
-        Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
+        // Laracasts\Utilities\JavaScript\JavaScriptServiceProvider::class,
     ],
 
     /*

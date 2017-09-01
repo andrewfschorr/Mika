@@ -29,7 +29,7 @@ class AuthAjaxController extends Controller
         }
 
         $name = $request->input('name');
-        $album_name = $user->getIg('name') . '-' . strtolower($name);
+        $album_name = $user->getIg('username') . '-' . strtolower($name);
         $display_name = $name;
 
         $data = compact('images', 'album_name', 'display_name');
@@ -67,7 +67,9 @@ class AuthAjaxController extends Controller
             }
 
             return response()->json([
-                'success' => 'success'
+                'success' => 'success',
+                'lcAlbumName' => $album->lc_album_name,
+                'igName' => $user->getIg('username'),
             ], 200);
         }
     }
