@@ -9,6 +9,8 @@ use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+    private $data = [];
+    private $user;
     /**
      * Create a new controller instance.
      *
@@ -24,22 +26,19 @@ class AuthController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function home()
+    public function home(Request $request)
     {
-        $user = \Auth::user();
+        $this->setupData(); // this cant go in construct
         $this->setContext('home');
-        $data = [
-            'ig_attrs' => $user->ig_attrs,
-            'albums' => $user->albums,
-            'ig_username' => $user->getIg('username')
-        ];
-        return view('home', $data);
-        // $this->dataBootstrap('home' , [
-        //     'foo' => 'bar',
-        // ]);
 
+        // TODO put it it's own static method
+        $this->dataBootstrap('home' , [
+            'igUsername' => $this->user->is_ig_authed,
+        ]);
+
+        return view('home', $this->data);
         // This works too ¯\_(ツ)_/¯
-        // TODO - Delete if not needed?
+        // TODO - Delete JS vendor pacakge if not needed?
         // JavaScript::put([
         //     'home' => [
         //         'client_data' => $client_data,
@@ -48,57 +47,24 @@ class AuthController extends Controller
         // ]);
     }
 
-    public function createAlbum(Request $request)
+    public function editAlbum(Request $request, $user, $album)
     {
-        $user = \Auth::user();
-        $images = [];
-        foreach ($request->input('imgs') as $image) {
-            if (strpos($image, 'cdninstagram.com')) {
-                $images[] = $image;
-            }
+        $this->setupData(); // this cant go in construct
+        if (empty($this->user->is_ig_authed)) {
+            return redirect('/home');
         }
+        echo 'yolo';
+        return view('edit', $this->data);
+    }
 
-        $name = $request->input('name');
-        $album_name = $user->getIg('name') . '-' . strtolower($name);
-        $display_name = $name;
-
-        $data = compact('images', 'album_name', 'display_name');
-
-        $validator = Validator::make(
-            $data,
-            [
-                'album_name' => 'required|unique:albums',
-                'images' => 'present|array',
-            ],
-            [
-                // because ajax, don't think these are in use
-                'album_name.unique' => 'Sorry, can only have one album per hashtag.',
-                'images' => 'Uh oh, Somethings up... Our engineers have been alerted :/',
-            ]
-        );
-
-        if ($validator->fails()) {
-            return response()->json([
-                'error_msg' => $validator->errors()->all()
-            ], 400);
-            // return redirect('/')->withErrors($validator, 'make_album');
-        } else {
-            try {
-                $album = Album::create([
-                    'album_name' => $data['album_name'],
-                    'display_name' => $data['display_name'],
-                    'images' => $data['images'],
-                    'user_id' => $user->id,
-                ]);
-            } catch (\Illuminate\Database\QueryException $exception) {
-                return response()->json([
-                    'error_msg' => 'Uh oh, Somethings up... Our engineers have been alerted :/'
-                ], 400);
-            }
-
-            return response()->json([
-                'success' => 'success'
-            ], 200);
-        }
+    private function setupData()
+    {
+        $this->user = \Auth::user();
+        $this->data = [
+            'is_ig_authed' => $this->user->is_ig_authed,
+            'ig_attrs' => $this->user->ig_attrs,
+            'albums' => $this->user->albums,
+            'ig_username' => $this->user->getIg('username'),
+        ];
     }
 }

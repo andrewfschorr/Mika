@@ -1,7 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<!-- AUTHED for ig! -->
-@if (!empty($ig_attrs))
+@if ($is_ig_authed)
     @include ('partials.ig.authed')
 <!-- Not Authed :/ -->
 @else

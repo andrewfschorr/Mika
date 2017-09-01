@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import getBootstrap from './components/get-bootstrap';
+import dataBootstrap from './components/data-bootstrap';
 
 class Errors extends React.Component {
     constructor(props) {
@@ -281,7 +281,12 @@ class CreateAlbum extends React.Component {
     }
 }
 
-ReactDOM.render(
-  <CreateAlbum/>,
-  document.getElementsByClassName('app-root')[0]
-);
+// TODO there has to be a better way :/
+if (dataBootstrap.get('home').igUsername) {
+    ReactDOM.render(
+        dataBootstrap.get('home').igUsername && <CreateAlbum/>,
+        document.getElementsByClassName('app-root')[0]
+    );
+}
+
+

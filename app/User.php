@@ -189,6 +189,11 @@ class User extends Authenticatable
         return $this->ig_attrs;
     }
 
+    public function getIsIgAuthedAttribute()
+    {
+        return !empty($this->ig_attrs);
+    }
+
     public function albums()
     {
         return $this->hasMany('App\Album');
