@@ -1,9 +1,13 @@
 @extends('layouts.app')
 @section('content')
 @if ($is_ig_authed)
-    @include ('partials.ig.authed')
-<!-- Not Authed :/ -->
+    <div class="container">
+        <div class="row">
+            @include ('partials.profile-sidebar')
+            @include ('partials.album-search')
+        <div>
+    </div>
 @else
-    @include ('partials.ig.not-authed')
+    @include ('partials.not-authed')
 @endif
 @endsection

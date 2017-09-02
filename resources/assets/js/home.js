@@ -81,6 +81,7 @@ class SelectedPhotos extends React.Component {
                             <span className="glyphicon glyphicon-remove rounded-circle" aria-hidden="true" onClick={() => {this.togglePhotoSelection(id)}}></span>
                             <img src={src} alt=""/>
                         </figure>
+                        <figcaption className="caption">{img.caption.text} <a target="_blank" href={img.link}>{img.user.username}</a></figcaption>
                     </div>
                 );
             });
@@ -126,6 +127,7 @@ class ReturnedPhotos extends React.Component {
                                 : null}
                             <img src={src} alt=""/>
                         </figure>
+                        <figcaption className="caption">{img.caption.text} <a target="_blank" href={img.link}>{img.user.username}</a></figcaption>
                     </div>
                 );
             });
@@ -188,13 +190,19 @@ class CreateAlbum extends React.Component {
 
         const selectedImgs = [];
         _.each(this.state.selectedImgs, (img) => {
-            selectedImgs.push(img.images.standard_resolution.url);
+            selectedImgs.push({
+                url: img.images.standard_resolution.url,
+                caption: img.caption.text,
+                link: img.link,
+                takenBy: img.user.username,
+            });
         });
 
         axios.post('/createalbum', {
             imgs: selectedImgs,
             name: this.state.searchTerm,
         }).then((resp) => {
+            console.log(resp);
             window.location.href = `/edit/${_.get(resp, 'data.igName', '')}/${_.get(resp, 'data.lcAlbumName', '')}`;
         }).catch((err) => {
             this.setState({
@@ -281,11 +289,12 @@ class CreateAlbum extends React.Component {
     }
 }
 
-// TODO there has to be a better way :/
-if (dataBootstrap.get('home').igUsername) {
+const homeEl = document.getElementsByClassName('home-search')[0];
+const data = dataBootstrap.get('home');
+if (data.igUsername && homeEl) {
     ReactDOM.render(
-        dataBootstrap.get('home').igUsername && <CreateAlbum/>,
-        document.getElementsByClassName('app-root')[0]
+        data.igUsername && <CreateAlbum/>,
+        homeEl
     );
 }
 

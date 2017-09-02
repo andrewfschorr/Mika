@@ -28,8 +28,7 @@ class AuthController extends Controller
      */
     public function home(Request $request)
     {
-        $this->setupData(); // this cant go in construct
-        $this->setContext('home');
+        $this->setupData('home'); // this cant go in construct
 
         $this->dataBootstrap('home' , [
             'igUsername' => $this->user->is_ig_authed,
@@ -39,16 +38,23 @@ class AuthController extends Controller
 
     public function editAlbum(Request $request, $user, $album)
     {
-        $this->setupData(); // this cant go in construct
+        $this->setupData('edit'); // this cant go in construct
+
         if (empty($this->user->is_ig_authed)) {
             return redirect('/home');
         }
-        echo 'yolo';
+        $album_name = sprintf('%1$s-%2$s', $this->user->getIg('username'), $album);
+
+        $this->dataBootstrap('edit', [
+            'album_photos' => $this->user->albums()->where('album_name', $album_name)->first(),
+        ]);
+
         return view('edit', $this->data);
     }
 
-    private function setupData()
+    private function setupData($context)
     {
+        $this->setContext($context);
         $this->user = \Auth::user();
         $this->data = [
             'is_ig_authed' => $this->user->is_ig_authed,

@@ -1,5 +1,3 @@
-<div class="container">
-    <div class="row">
         <div class="col-sm-3 profile-sidebar">
             <div class="card">
                 <img class="card-img-top" src="{{ $ig_attrs['profile_picture'] }}" alt="">
@@ -41,6 +39,3 @@
                 </ul>
             @endif
         </div>
-        @include ('partials.album-search')
-    <div>
-</div>

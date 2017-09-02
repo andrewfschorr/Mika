@@ -1,4 +1,9 @@
 @extends('layouts.app')
 @section('content')
-@include ('partials.ig.authed')
+    <div class="container">
+        <div class="row">
+            @include ('partials.profile-sidebar')
+            @include ('partials.edit-album')
+        <div>
+    </div>
 @endsection

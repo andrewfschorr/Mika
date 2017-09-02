@@ -11256,15 +11256,23 @@ a.text-gray-dark:hover {
   }
 }
 
-.photo-grid-item .photo-item {
+.home-search .btn {
+  margin-top: 10px;
+}
+
+.home-search .photo-grid-item .photo-item {
   position: relative;
 }
 
-.photo-grid-item .photo-item img {
+.home-search .photo-grid-item .photo-item img {
   width: 100%;
 }
 
-.photo-grid-item .glyphicon {
+.home-search .photo-grid-item .caption {
+  font-size: 11px;
+}
+
+.home-search .photo-grid-item .glyphicon {
   position: absolute;
   top: -8px;
   right: -8px;
@@ -11274,20 +11282,20 @@ a.text-gray-dark:hover {
   color: #fff;
 }
 
-.photo-grid-item.album-item .glyphicon {
+.home-search .photo-grid-item.album-item .glyphicon {
   background: #5cb85c;
   display: none;
 }
 
-.photo-grid-item.album-item:hover .glyphicon {
+.home-search .photo-grid-item.album-item:hover .glyphicon {
   display: block;
 }
 
-.photo-grid-item.returned-photo {
+.home-search .photo-grid-item.returned-photo .photo-item {
   cursor: pointer;
 }
 
-.photo-grid-item.returned-photo .glyphicon {
+.home-search .photo-grid-item.returned-photo .glyphicon {
   background: #0275d8;
   display: block;
   cursor: default;

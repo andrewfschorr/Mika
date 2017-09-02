@@ -1,1 +1,1 @@
-<div class="app-root col-sm-9"></div>
+<div class="home-search col-sm-9"></div>

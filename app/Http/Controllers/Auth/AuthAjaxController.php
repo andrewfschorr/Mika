@@ -23,8 +23,13 @@ class AuthAjaxController extends Controller
         $user = \Auth::user();
         $images = [];
         foreach ($request->input('imgs') as $image) {
-            if (strpos($image, 'cdninstagram.com')) {
-                $images[] = $image;
+            if (strpos($image['url'], 'cdninstagram.com')) {
+                $images[] = [
+                    'url' => $image['url'],
+                    'caption' => $image['caption'],
+                    'link' => $image['link'],
+                    'taken_by' => $image['takenBy'],
+                ];
             }
         }
 
@@ -51,7 +56,6 @@ class AuthAjaxController extends Controller
             return response()->json([
                 'error_msg' => $validator->errors()->all()
             ], 400);
-            // return redirect('/')->withErrors($validator, 'make_album');
         } else {
             try {
                 $album = Album::create([
@@ -66,6 +70,7 @@ class AuthAjaxController extends Controller
                 ], 400);
             }
 
+            $request->session()->flash('album_success', sprintf('Album <strong>%s</strong> was created! 🎉', $album->display_name));
             return response()->json([
                 'success' => 'success',
                 'lcAlbumName' => $album->lc_album_name,

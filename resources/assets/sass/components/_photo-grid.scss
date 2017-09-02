@@ -1,43 +1,56 @@
-.photo-grid-item{
-    $font-size-item: 13px;
+.home-search {
 
-    .photo-item {
-        position: relative;
+    .btn {
+        margin-top: 10px;
+    }
+    .photo-grid-item{
+        $font-size-item: 13px;
 
-        img {
-            width: 100%;
+        .photo-item {
+            position: relative;
+
+            img {
+                width: 100%;
+            }
         }
-    }
 
-    .glyphicon {
-        position: absolute;
-        top: -8px;
-        right: -8px;
-        font-size: $font-size-item;
-        cursor: pointer;
-        padding: 5px;
-        color:$white;
-
-    }
-
-    &.album-item {
+        .caption {
+            font-size: 11px;
+        }
 
         .glyphicon {
-            background: $green;
-            display: none;
-        }
-        &:hover .glyphicon{
-            display: block;
-        }
-    }
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            font-size: $font-size-item;
+            cursor: pointer;
+            padding: 5px;
+            color:$white;
 
-    &.returned-photo {
+        }
 
-        cursor: pointer;
-        .glyphicon {
-            background: $blue;
-            display: block;
-            cursor: default;
+        &.album-item {
+
+            .glyphicon {
+                background: $green;
+                display: none;
+            }
+            &:hover .glyphicon{
+                display: block;
+            }
+        }
+
+        &.returned-photo {
+
+            .photo-item {
+                cursor: pointer;
+            }
+
+            .glyphicon {
+                background: $blue;
+                display: block;
+                cursor: default;
+            }
         }
     }
 }

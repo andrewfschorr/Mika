@@ -11,8 +11,10 @@ const { mix } = require('laravel-mix');
  |
  */
 
+ // TODO wildcard this bitch
 mix.react('resources/assets/js/vendor.js', 'public/js')
     .react('resources/assets/js/home.js', 'public/js')
+    .react('resources/assets/js/edit.js', 'public/js')
     .sass('resources/assets/sass/app.scss', 'public/css')
     .sourceMaps()
     .disableNotifications();
