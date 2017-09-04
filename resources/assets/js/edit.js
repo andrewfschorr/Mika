@@ -24,10 +24,11 @@ class SearchMore extends React.Component {
             </div>
         } else {
             searchResults = this.props.searchMorePhotos.map((img, idx) => {
-                const isPhotoAlreadySelected = _.some(this.props.selectedPhotos, {id: img.id});
-                if (isPhotoAlreadySelected) {
-                    img.isSelected = true;
-                }
+                // TODO do something better here
+                // const isPhotoAlreadySelected = _.some(this.props.selectedPhotos, {id: img.id});
+                // if (isPhotoAlreadySelected) {
+                //     img.isSelected = true;
+                // }
                 const id = img.id;
                 const src = img.images.standard_resolution.url;
                 return (
@@ -105,13 +106,22 @@ class EditAlbum extends React.Component {
             searchMorePhotos: [],
             hasSearched: false,
         };
+        this.selectedPhotosMap = {};
+        _.each(this.state.selectedPhotos, (img) => {
+            this.selectedPhotosMap[img.id] = true;
+        });
     }
 
     searchMore() {
         axios.get(`/search-term/${this.state.searchTerm}`).then(response => {
             this.setState({
                 hasSearched: true,
-                searchMorePhotos: response.data.data,
+                searchMorePhotos: response.data.data.map((img) => {
+                    if (this.selectedPhotosMap[img.id] !== undefined) {
+                        img.isSelected = true;
+                    }
+                    return img;
+                }),
             });
         }).catch(e => {
             throw new Error(e);
