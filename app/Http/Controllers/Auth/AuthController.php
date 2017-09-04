@@ -40,13 +40,15 @@ class AuthController extends Controller
     {
         $this->setupData('edit'); // this cant go in construct
 
-        if (empty($this->user->is_ig_authed)) {
+        $album_name = sprintf('%1$s-%2$s', $this->user->getIg('username'), $album);
+        $album_photos = $this->user->albums()->where('album_name', $album_name)->first();
+
+        if (empty($this->user->is_ig_authed) || !$album_photos) {
             return redirect('/home');
         }
-        $album_name = sprintf('%1$s-%2$s', $this->user->getIg('username'), $album);
 
         $this->dataBootstrap('edit', [
-            'album_photos' => $this->user->albums()->where('album_name', $album_name)->first(),
+            'album_photos' => $album_photos,
         ]);
 
         return view('edit', $this->data);

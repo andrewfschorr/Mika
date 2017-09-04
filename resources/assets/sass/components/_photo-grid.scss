@@ -1,56 +1,68 @@
-.home-search {
+.btn {
+    margin-top: 10px;
+}
 
-    .btn {
-        margin-top: 10px;
+.selected-photos {
+    .d-flex {
+        width: 100%; // Ugh wtf
     }
-    .photo-grid-item{
-        $font-size-item: 13px;
+}
+
+.photo-results {
+
+}
+
+.photo-grid-item{
+    $font-size-item: 13px;
+
+    .photo-item {
+        position: relative;
+
+        img {
+            width: 100%;
+        }
+    }
+
+    .caption {
+        font-size: 11px;
+    }
+
+    .glyphicon {
+        position: absolute;
+        top: -8px;
+        right: -8px;
+        font-size: $font-size-item;
+        cursor: pointer;
+        padding: 5px;
+        color:$white;
+
+    }
+
+    &.album-item, &.edit-album-item {
+
+        .glyphicon {
+            background: $green;
+            display: none;
+        }
+        &:hover .glyphicon{
+            display: block;
+        }
+    }
+
+    &.album-item {
+        cursor: move;
+    }
+
+    &.returned-photo {
 
         .photo-item {
-            position: relative;
-
-            img {
-                width: 100%;
-            }
-        }
-
-        .caption {
-            font-size: 11px;
+            cursor: pointer;
         }
 
         .glyphicon {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            font-size: $font-size-item;
-            cursor: pointer;
-            padding: 5px;
-            color:$white;
-
-        }
-
-        &.album-item {
-
-            .glyphicon {
-                background: $green;
-                display: none;
-            }
-            &:hover .glyphicon{
-                display: block;
-            }
-        }
-
-        &.returned-photo {
-
-            .photo-item {
-                cursor: pointer;
-            }
-
-            .glyphicon {
-                background: $blue;
-                display: block;
-                cursor: default;
-            }
+            background: $blue;
+            display: block;
+            cursor: default;
         }
     }
 }

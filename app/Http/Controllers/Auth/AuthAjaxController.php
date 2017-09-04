@@ -22,13 +22,15 @@ class AuthAjaxController extends Controller
     {
         $user = \Auth::user();
         $images = [];
+
         foreach ($request->input('imgs') as $image) {
             if (strpos($image['url'], 'cdninstagram.com')) {
                 $images[] = [
                     'url' => $image['url'],
                     'caption' => $image['caption'],
                     'link' => $image['link'],
-                    'taken_by' => $image['takenBy'],
+                    'takenBy' => $image['takenBy'],
+                    'id' => $image['id'],
                 ];
             }
         }

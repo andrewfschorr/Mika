@@ -1,11 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import dataBootstrap from './components/data-bootstrap';
+// ugh
+import uniqueId from 'lodash/uniqueId';
+import Sortable from 'react-sortablejs';
 
 class Errors extends React.Component {
     constructor(props) {
         super(props)
     }
+
     render() {
         {return this.props.errors.length ? <div className="errors">
             {this.props.errors.map((error, idx) => {
@@ -88,11 +92,22 @@ class SelectedPhotos extends React.Component {
         }
 
         return (
-            <div className="row">
+            <div className="row selected-photos">
                 <h6 className="col-12">
                     Currently selected photos:
                 </h6>
-                {selectedImgs}
+                <Sortable
+                    ref={(c) => {
+                        if (c) {
+                            c.sortable.el.classList.add('d-flex');
+                        }
+                    }}
+                    options={{
+                        animation: 200,
+                    }}
+                >
+                    {selectedImgs}
+                </Sortable>
                 {makeAlbumBtn}
             </div>
         );
@@ -147,7 +162,6 @@ class ReturnedPhotos extends React.Component {
     }
 }
 
-
 class CreateAlbum extends React.Component {
     constructor(props) {
         super(props);
@@ -195,6 +209,7 @@ class CreateAlbum extends React.Component {
                 caption: img.caption.text,
                 link: img.link,
                 takenBy: img.user.username,
+                id: img.id
             });
         });
 
@@ -202,7 +217,6 @@ class CreateAlbum extends React.Component {
             imgs: selectedImgs,
             name: this.state.searchTerm,
         }).then((resp) => {
-            console.log(resp);
             window.location.href = `/edit/${_.get(resp, 'data.igName', '')}/${_.get(resp, 'data.lcAlbumName', '')}`;
         }).catch((err) => {
             this.setState({
