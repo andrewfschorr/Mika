@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import dataBootstrap from './components/data-bootstrap';
+import Sortable from 'react-sortablejs';
 
 class SearchMore extends React.Component {
     constructor(props) {
@@ -23,6 +24,10 @@ class SearchMore extends React.Component {
             </div>
         } else {
             searchResults = this.props.searchMorePhotos.map((img, idx) => {
+                const isPhotoAlreadySelected = _.some(this.props.selectedPhotos, {id: img.id});
+                if (isPhotoAlreadySelected) {
+                    img.isSelected = true;
+                }
                 const id = img.id;
                 const src = img.images.standard_resolution.url;
                 return (
@@ -74,7 +79,18 @@ class SelectedPhotos extends React.Component {
                 <h3 className="col-12">
                     #<strong>{this.props.name}</strong> Album
                 </h3>
+                <Sortable
+                    ref={(c) => {
+                        if (c) {
+                            c.sortable.el.classList.add('d-flex');
+                        }
+                    }}
+                    options={{
+                        animation: 200,
+                    }}
+                >
                 {albumPhotos}
+                </Sortable>
             </div>
         );
     }
@@ -113,6 +129,7 @@ class EditAlbum extends React.Component {
                     searchMore={this.searchMore.bind(this)}
                     hasSearched={this.state.hasSearched}
                     searchMorePhotos={this.state.searchMorePhotos}
+                    selectedPhotos={this.state.selectedPhotos}
                 />
             </div>
         );

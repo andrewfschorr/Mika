@@ -11286,6 +11286,11 @@ a.text-gray-dark:hover {
   color: #fff;
 }
 
+.photo-grid-item.album-item,
+.photo-grid-item.edit-album-item {
+  cursor: move;
+}
+
 .photo-grid-item.album-item .glyphicon,
 .photo-grid-item.edit-album-item .glyphicon {
   background: #5cb85c;
@@ -11295,10 +11300,6 @@ a.text-gray-dark:hover {
 .photo-grid-item.album-item:hover .glyphicon,
 .photo-grid-item.edit-album-item:hover .glyphicon {
   display: block;
-}
-
-.photo-grid-item.album-item {
-  cursor: move;
 }
 
 .photo-grid-item.returned-photo .photo-item {

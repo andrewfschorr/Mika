@@ -40,6 +40,8 @@
 
     &.album-item, &.edit-album-item {
 
+        cursor: move;
+
         .glyphicon {
             background: $green;
             display: none;
@@ -47,10 +49,6 @@
         &:hover .glyphicon{
             display: block;
         }
-    }
-
-    &.album-item {
-        cursor: move;
     }
 
     &.returned-photo {

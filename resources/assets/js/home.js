@@ -1,8 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import dataBootstrap from './components/data-bootstrap';
-// ugh
-import uniqueId from 'lodash/uniqueId';
 import Sortable from 'react-sortablejs';
 
 class Errors extends React.Component {
