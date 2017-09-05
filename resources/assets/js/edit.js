@@ -12,6 +12,10 @@ class SearchMore extends React.Component {
         this.props.searchMore();
     }
 
+    togglePhotoSelection(id) {
+        this.props.togglePhotoSelection(id);
+    }
+
     render() {
         let searchResults;
         if (!this.props.hasSearched) {
@@ -24,11 +28,6 @@ class SearchMore extends React.Component {
             </div>
         } else {
             searchResults = this.props.searchMorePhotos.map((img, idx) => {
-                // TODO do something better here
-                // const isPhotoAlreadySelected = _.some(this.props.selectedPhotos, {id: img.id});
-                // if (isPhotoAlreadySelected) {
-                //     img.isSelected = true;
-                // }
                 const id = img.id;
                 const src = img.images.standard_resolution.url;
                 return (
@@ -58,6 +57,10 @@ class SearchMore extends React.Component {
 class SelectedPhotos extends React.Component {
     constructor(props) {
         super(props);
+    }
+
+    togglePhotoSelection(id) {
+        this.props.togglePhotoSelection(id);
     }
 
     render() {
@@ -112,6 +115,53 @@ class EditAlbum extends React.Component {
         });
     }
 
+    togglePhotoSelection(id) {
+        let updatedSelectedPhotos;
+        // remove photo
+        if (this.selectedPhotosMap[id] !== undefined) {
+            // remove photo from selected photos
+            _.remove(this.state.selectedPhotos, (photo) => {
+                return photo.id === id;
+            });
+            updatedSelectedPhotos = this.state.selectedPhotos;
+            // remove isSelected = true attribute
+            _.each(this.state.searchMorePhotos, (photo, idx) => {
+                if (photo.id === id) {
+                    delete photo.isSelected;
+                    return false;
+                }
+            });
+            delete this.selectedPhotosMap[id];
+        // add photo
+        } else {
+            // add to selectedImgs
+            const addedPhoto = _.find(this.state.searchMorePhotos, (img) => {
+                return img.id === id;
+            });
+
+            updatedSelectedPhotos = this.state.selectedPhotos.concat({
+                id: addedPhoto.id,
+                url: addedPhoto.images.standard_resolution.url,
+                link: addedPhoto.link,
+                caption: addedPhoto.caption.text,
+                takenBy: addedPhoto.user.username
+            });
+
+            _.each(this.state.searchMorePhotos, (photo, idx) => {
+                if (photo.id === id) {
+                    photo.isSelected = true;
+                    return false;
+                }
+            });
+            this.selectedPhotosMap[id] = true;
+        }
+
+        this.setState({
+            selectedPhotos: updatedSelectedPhotos,
+            searchMorePhotos: this.state.searchMorePhotos
+        });
+    }
+
     searchMore() {
         axios.get(`/search-term/${this.state.searchTerm}`).then(response => {
             this.setState({
@@ -132,14 +182,16 @@ class EditAlbum extends React.Component {
         return (
             <div className="edit-photos">
                 <SelectedPhotos
-                    photos={this.props.photos}
-                    name={this.props.name}
+                    photos={this.state.selectedPhotos}
+                    name={this.state.searchTerm}
+                    togglePhotoSelection={this.togglePhotoSelection.bind(this)}
                 />
                 <SearchMore
                     searchMore={this.searchMore.bind(this)}
                     hasSearched={this.state.hasSearched}
                     searchMorePhotos={this.state.searchMorePhotos}
                     selectedPhotos={this.state.selectedPhotos}
+                    togglePhotoSelection={this.togglePhotoSelection.bind(this)}
                 />
             </div>
         );
