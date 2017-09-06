@@ -20,7 +20,7 @@ class SearchMore extends React.Component {
         let searchResults;
         if (!this.props.hasSearched) {
             searchResults = <div className="col-12">
-                <button onClick={() => {this.searchMore()}} className="btn btn-primary">search for more {this.props.name} photos</button>
+                <button onClick={() => {this.searchMore()}} className="btn btn-primary">search for more <strong>#{this.props.name}</strong> tagged photos</button>
             </div>
         } else if (!this.props.searchMorePhotos.length) {
             searchResults = <div className="col">
@@ -63,20 +63,28 @@ class SelectedPhotos extends React.Component {
         this.props.togglePhotoSelection(id);
     }
 
+    saveAlbum() {
+        this.props.saveAlbum();
+    }
+
     render() {
         let albumPhotos;
-        albumPhotos = this.props.photos.map((img, idx) => {
-            const {id, url, link, caption, takenBy} = img;
-            return (
-                <div className="col-sm-3 photo-grid-item edit-album-item" key={id}>
-                    <figure className="photo-item">
-                        <span className="glyphicon glyphicon-remove rounded-circle" aria-hidden="true" onClick={() => {this.togglePhotoSelection(id)}}></span>
-                        <img src={url} alt=""/>
-                    </figure>
-                    <figcaption className="caption">{caption} <a target="_blank" href={link}>{takenBy}</a></figcaption>
-                </div>
-            );
-        });
+        if (!this.props.photos.length) {
+            albumPhotos = <h3 className="col">Oh noe! Empty album 😰.</h3>;
+        } else {
+            albumPhotos = this.props.photos.map((img, idx) => {
+                const {id, url, link, caption, takenBy} = img;
+                return (
+                    <div className="col-sm-3 photo-grid-item edit-album-item" key={id}>
+                        <figure className="photo-item">
+                            <span className="glyphicon glyphicon-remove rounded-circle" aria-hidden="true" onClick={() => {this.togglePhotoSelection(id)}}></span>
+                            <img src={url} alt=""/>
+                        </figure>
+                        <figcaption className="caption">{caption} <a target="_blank" href={link}>{takenBy}</a></figcaption>
+                    </div>
+                );
+            });
+        }
 
         return (
             <div className="row selected-photos">
@@ -95,6 +103,11 @@ class SelectedPhotos extends React.Component {
                 >
                 {albumPhotos}
                 </Sortable>
+                {this.props.photos.length ?
+                    <div className="col">
+                        <button onClick={() => this.saveAlbum()} className="btn btn-success">Save Album</button>
+                    </div>
+                : null}
             </div>
         );
     }
@@ -178,6 +191,19 @@ class EditAlbum extends React.Component {
         });
     }
 
+    saveAlbum() {
+        axios.post('/updateAlbum', {
+            imgs: this.state.selectedPhotos,
+            name: this.state.searchTerm,
+        }).then((resp) => {
+            window.location.reload();
+        }).catch((err) => {
+            this.setState({
+                errors: err.response.data.error_msg,
+            });
+        });
+    }
+
     render() {
         return (
             <div className="edit-photos">
@@ -185,8 +211,11 @@ class EditAlbum extends React.Component {
                     photos={this.state.selectedPhotos}
                     name={this.state.searchTerm}
                     togglePhotoSelection={this.togglePhotoSelection.bind(this)}
+                    hasSearched={this.state.hasSearched}
+                    saveAlbum={this.saveAlbum.bind(this)}
                 />
                 <SearchMore
+                    name={this.state.searchTerm}
                     searchMore={this.searchMore.bind(this)}
                     hasSearched={this.state.hasSearched}
                     searchMorePhotos={this.state.searchMorePhotos}

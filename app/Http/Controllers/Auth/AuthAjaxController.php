@@ -80,4 +80,36 @@ class AuthAjaxController extends Controller
             ], 200);
         }
     }
+
+    public function updateAlbum(Request $request)
+    {
+        $user = \Auth::user();
+        $album_name = $user->getIg('username') . '-' . strtolower($request->input('name'));
+        $album = Album::where('album_name', $album_name)->first();
+
+        $images = [];
+        foreach ($request->input('imgs') as $image) {
+            if (strpos($image['url'], 'cdninstagram.com')) {
+                $images[] = [
+                    'url' => $image['url'],
+                    'caption' => $image['caption'],
+                    'link' => $image['link'],
+                    'takenBy' => $image['takenBy'],
+                    'id' => $image['id'],
+                ];
+            }
+        }
+        $album->images = $images;
+        if ($album->save()) {
+            return response()->json([
+                'success' => 'success',
+                'lcAlbumName' => $album->lc_album_name,
+                'igName' => $user->getIg('username'),
+            ], 200);
+        } else {
+            return response()->json([
+                'error_msg' => 'Uh oh, Somethings up... Our engineers have been alerted :/'
+            ], 400);
+        }
+    }
 }
