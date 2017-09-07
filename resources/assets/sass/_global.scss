@@ -5,3 +5,12 @@ body {
     max-width: 1080px;
 }
 
+html body {
+    h1, h2, h3, h4, h5, h6, a, button {
+        font-family: "ralewaymedium", sans-serif;
+
+        strong {
+            font-family: "ralewaybold", sans-serif;
+        }
+    }
+}
