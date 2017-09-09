@@ -21,7 +21,7 @@
     </script>
 </head>
 <body>
-  <div class="app">
+    <div class="app">
         <header class="navbar navbar-toggleable navbar-light bg-faded">
             <nav class="container">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -54,9 +54,18 @@
                         @endif
                     </ul>
                 </div>
-            </div>
+            </nav>
         </header>
         @yield('content')
+        <footer class="footer">
+            <div class="container">
+                <ul>
+                    <li>
+                        <a href="/about">About</a>
+                    </li>
+                </ul>
+            </div>
+        </footer>
     </div>
     @if (isset($dataBootstrap))
     <script id="{!! $dataBootstrap['name'] !!}-data-bootstrap">

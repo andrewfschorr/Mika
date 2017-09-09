@@ -76,7 +76,7 @@ class SelectedPhotos extends React.Component {
             selectedImgs = this.props.selectedImgs.map((img, idx) => {
                 const id = img.id;
                 const src = img.images.standard_resolution.url;
-                makeAlbumBtn = <h6 className="col-12"><button className="btn btn-success" onClick={() => {this.makeAlbum(id)}}>Make album!</button></h6>;
+                makeAlbumBtn = <h6 className="col-12"><button className="btn btn-success" onClick={() => {this.makeAlbum(id)}}>Make Album</button></h6>;
                 return (
                     <div className="col-sm-3 photo-grid-item album-item" key={id}>
                         <figure className="photo-item">
@@ -153,7 +153,7 @@ class ReturnedPhotos extends React.Component {
                 <h6 className="col-12"><strong>{this.props.searchTerm}</strong> tagged photos:</h6>
                  {photos}
                 <div className="col-12">
-                    <button className="btn btn-primary" onClick={() => this.reset()}>Search again</button>
+                    <button className="btn btn-primary" onClick={() => this.reset()}>New Search</button>
                 </div>
             </div>
         );

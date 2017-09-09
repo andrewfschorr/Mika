@@ -1,9 +1,10 @@
 // Variables
 // https://laracasts.com/discuss/channels/tips/tip-using-bootstrap-4-alpha-6-with-laravel-54
-// @import "variables";
+@import 'variables';
 @import 'bootstrap-fonts.scss';
 @import 'fonts';
 @import 'node_modules/bootstrap/scss/bootstrap.scss';
+@import 'components/footer';
 @import 'components/photo-grid';
 @import 'components/edit-page';
 @import 'components/nav';
