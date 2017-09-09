@@ -10,7 +10,6 @@ const { mix } = require('laravel-mix');
  | file for the application as well as bundling up all the JS files.
  |
  */
-
  // TODO wildcard this bitch
 mix.react('resources/assets/js/vendor.js', 'public/js')
     .react('resources/assets/js/home.js', 'public/js')

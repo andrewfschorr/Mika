@@ -10,6 +10,7 @@ Route::post('/updateAlbum',             'AuthAjaxController@updateAlbum');
 Route::get('/auth/instagram',           'Auth\LoginController@authInstagram');
 Route::get('/auth/instagram/callback',  'Auth\LoginController@authInstagramCallback');
 Route::get('/search-term/{term}',       'IgProxyController@index');
+Route::get('/about'             ,       'staticController@about');
 Auth::routes();
 
 /**

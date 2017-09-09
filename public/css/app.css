@@ -1502,7 +1502,7 @@ body {
   font-family: -apple-system, system-ui, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 1rem;
   font-weight: normal;
-  line-height: 1.6;
+  line-height: 1.5;
   color: #292b2c;
   background-color: #fff;
 }
@@ -3898,17 +3898,17 @@ pre code {
 }
 
 .form-control::-webkit-input-placeholder {
-  color: #b1b7ba;
+  color: #636c72;
   opacity: 1;
 }
 
 .form-control:-ms-input-placeholder {
-  color: #b1b7ba;
+  color: #636c72;
   opacity: 1;
 }
 
 .form-control::placeholder {
-  color: #b1b7ba;
+  color: #636c72;
   opacity: 1;
 }
 
@@ -5266,7 +5266,7 @@ tbody.collapse.show {
   display: -webkit-inline-box;
   display: -ms-inline-flexbox;
   display: inline-flex;
-  min-height: 1.6rem;
+  min-height: 1.5rem;
   padding-left: 1.5rem;
   margin-right: 1rem;
   cursor: pointer;
@@ -5304,7 +5304,7 @@ tbody.collapse.show {
 
 .custom-control-indicator {
   position: absolute;
-  top: 0.3rem;
+  top: 0.25rem;
   left: 0;
   display: block;
   width: 1rem;
@@ -7020,14 +7020,14 @@ button.list-group-item-danger.active {
   font-size: 1.5rem;
   font-weight: bold;
   line-height: 1;
-  color: #000;
+  color: rgba(0, 0, 0, 0.9);
   text-shadow: 0 1px 0 #fff;
   opacity: .5;
 }
 
 .close:focus,
 .close:hover {
-  color: #000;
+  color: rgba(0, 0, 0, 0.9);
   text-decoration: none;
   cursor: pointer;
   opacity: .75;
@@ -7104,7 +7104,7 @@ button.close {
   bottom: 0;
   left: 0;
   z-index: 1040;
-  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.9);
 }
 
 .modal-backdrop.fade {
@@ -7131,7 +7131,7 @@ button.close {
 
 .modal-title {
   margin-bottom: 0;
-  line-height: 1.6;
+  line-height: 1.5;
 }
 
 .modal-body {
@@ -7198,7 +7198,7 @@ button.close {
   font-weight: normal;
   letter-spacing: normal;
   line-break: auto;
-  line-height: 1.6;
+  line-height: 1.5;
   text-align: left;
   text-align: start;
   text-decoration: none;
@@ -7229,7 +7229,7 @@ button.close {
   margin-left: -5px;
   content: "";
   border-width: 5px 5px 0;
-  border-top-color: #000;
+  border-top-color: rgba(0, 0, 0, 0.9);
 }
 
 .tooltip.tooltip-right,
@@ -7245,7 +7245,7 @@ button.close {
   margin-top: -5px;
   content: "";
   border-width: 5px 5px 5px 0;
-  border-right-color: #000;
+  border-right-color: rgba(0, 0, 0, 0.9);
 }
 
 .tooltip.tooltip-bottom,
@@ -7261,7 +7261,7 @@ button.close {
   margin-left: -5px;
   content: "";
   border-width: 0 5px 5px;
-  border-bottom-color: #000;
+  border-bottom-color: rgba(0, 0, 0, 0.9);
 }
 
 .tooltip.tooltip-left,
@@ -7277,7 +7277,7 @@ button.close {
   margin-top: -5px;
   content: "";
   border-width: 5px 0 5px 5px;
-  border-left-color: #000;
+  border-left-color: rgba(0, 0, 0, 0.9);
 }
 
 .tooltip-inner {
@@ -7285,7 +7285,7 @@ button.close {
   padding: 3px 8px;
   color: #fff;
   text-align: center;
-  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.9);
   border-radius: 0.25rem;
 }
 
@@ -7310,7 +7310,7 @@ button.close {
   font-weight: normal;
   letter-spacing: normal;
   line-break: auto;
-  line-height: 1.6;
+  line-height: 1.5;
   text-align: left;
   text-align: start;
   text-decoration: none;
@@ -11367,6 +11367,10 @@ body {
 
 .footer ul li {
   list-style-type: none;
+}
+
+.footer ul li a {
+  color: rgba(0, 0, 0, 0.9);
 }
 
 .btn {

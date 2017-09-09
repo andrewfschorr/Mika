@@ -20,6 +20,10 @@ body {
 
         li {
             list-style-type: none;
+
+            a {
+                color: $black;
+            }
             // color: $text-black;
         }
     }
