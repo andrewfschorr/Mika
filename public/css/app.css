@@ -11351,6 +11351,7 @@ body {
 }
 
 .footer {
+  margin-top: 50px;
   position: absolute;
   bottom: 0;
   width: 100%;
@@ -11444,6 +11445,10 @@ body {
 
 .profile-sidebar a.bio-link {
   word-break: break-all;
+}
+
+.album .navbar {
+  margin-bottom: 0;
 }
 
 body {

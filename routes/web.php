@@ -5,6 +5,7 @@ use App\Task;
 Route::get('/',                         'GuestController@index');
 Route::get('/home',                     'AuthController@home');
 Route::get('/edit/{user}/{album}',      'AuthController@editAlbum');
+Route::get('/album/{user}/{album}',     'AlbumController@viewAlbum');
 Route::post('/createalbum',             'AuthAjaxController@createAlbum');
 Route::post('/updateAlbum',             'AuthAjaxController@updateAlbum');
 Route::get('/auth/instagram',           'Auth\LoginController@authInstagram');

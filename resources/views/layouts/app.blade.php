@@ -21,7 +21,7 @@
     </script>
 </head>
 <body>
-    <div class="app">
+    <div class="app{{isset($context) ? " $context" : ''}}">
         <header class="navbar navbar-toggleable navbar-light bg-faded">
             <nav class="container">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
@@ -57,23 +57,23 @@
             </nav>
         </header>
         @yield('content')
-        <footer class="footer">
-            <div class="container">
-                <ul>
-                    <li>
-                        <a href="/about">About</a>
-                    </li>
-                </ul>
-            </div>
-        </footer>
     </div>
+    <footer class="footer">
+        <div class="container">
+            <ul>
+                <li>
+                    <a href="/about">About</a>
+                </li>
+            </ul>
+        </div>
+    </footer>
     @if (isset($dataBootstrap))
     <script id="{!! $dataBootstrap['name'] !!}-data-bootstrap">
         var {!! $dataBootstrap['name'] !!} = {!! json_encode($dataBootstrap['data']) !!};
     </script>
     @endif
     <script src="{{ asset('js/vendor.js') }}"></script>
-    @if (isset($context))
+    @if (isset($context) && file_exists( public_path() . '/js/' . $context . '.js' ))
         <script src="{{ asset(sprintf('js/%s.js', $context)) }}"></script>
     @endif
 </body>

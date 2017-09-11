@@ -5,7 +5,7 @@
         <div class="row">
             @include ('partials.profile-sidebar')
             @include ('partials.album-search')
-        <div>
+        </div>
     </div>
 @else
     @include ('partials.not-authed')
