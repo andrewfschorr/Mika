@@ -31,7 +31,7 @@ class AuthController extends Controller
         $this->setupData('home'); // this cant go in construct
 
         $this->dataBootstrap('home' , [
-            'igUsername' => $this->user->is_ig_authed,
+            'isIgAuthed' => $this->user->is_ig_authed,
         ]);
         return view('home', $this->data);
     }
@@ -48,7 +48,8 @@ class AuthController extends Controller
         }
 
         $this->dataBootstrap('edit', [
-            'album_photos' => $album_photos,
+            'albumPhotos' => $album_photos,
+            'igUserName' => $this->user->getIg('username'),
         ]);
 
         return view('edit', $this->data);

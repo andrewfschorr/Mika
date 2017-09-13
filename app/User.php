@@ -21,7 +21,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
  * $user->setIg('id', 12345);
  * $user->setIg([
  *     'id' => 12345
- *      'username' => frankeliuspoopie
+ *     'username' => frankeliuspoopie
  * ]);
  *
  * $user->getIg('name');

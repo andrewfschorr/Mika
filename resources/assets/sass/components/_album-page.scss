@@ -2,4 +2,24 @@
     .navbar {
         margin-bottom: 0;
     }
+
+    .album-name {
+        margin: 30px 0;
+    }
+
+    .ig-name {
+        // margin: 40px;
+    }
+
+    .photos {
+        padding-top: 40px;
+
+        .album-item {
+            .fig {
+                img {
+                    width: 100%;
+                }
+            }
+        }
+    }
 }

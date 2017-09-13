@@ -68,10 +68,12 @@ class SelectedPhotos extends React.Component {
     }
 
     render() {
-        let albumPhotos;
+        let albumPhotos,
+            albumUrl;
         if (!this.props.photos.length) {
             albumPhotos = <h3 className="col">Oh noe! Empty album 😰.</h3>;
         } else {
+            albumUrl = `/album/${this.props.username}/${this.props.name}`;
             albumPhotos = this.props.photos.map((img, idx) => {
                 const {id, url, link, caption, takenBy} = img;
                 return (
@@ -91,6 +93,9 @@ class SelectedPhotos extends React.Component {
                 <h3 className="col-12">
                     #<strong>{this.props.name}</strong> Album
                 </h3>
+                <h6 className="col-12">
+                    <a target="_blank" href={albumUrl}>http://pixeltagged.com/album/{this.props.username}/{this.props.name}</a>
+                </h6>
                 <Sortable
                     ref={(c) => {
                         if (c) {
@@ -121,6 +126,7 @@ class EditAlbum extends React.Component {
             searchTerm: props.name,
             searchMorePhotos: [],
             hasSearched: false,
+            username: props.username,
         };
         this.selectedPhotosMap = {};
         _.each(this.state.selectedPhotos, (img) => {
@@ -213,6 +219,7 @@ class EditAlbum extends React.Component {
                     togglePhotoSelection={this.togglePhotoSelection.bind(this)}
                     hasSearched={this.state.hasSearched}
                     saveAlbum={this.saveAlbum.bind(this)}
+                    username={this.state.username}
                 />
                 <SearchMore
                     name={this.state.searchTerm}
@@ -230,11 +237,12 @@ class EditAlbum extends React.Component {
 const editAlbumEl = document.getElementsByClassName('edit-album')[0];
 const data = dataBootstrap.get('edit');
 
-if (data.album_photos && editAlbumEl) {
+if (data.albumPhotos && editAlbumEl) {
     ReactDOM.render(
         <EditAlbum
-            photos={data.album_photos.images}
-            name={data.album_photos.display_name}
+            photos={data.albumPhotos.images}
+            name={data.albumPhotos.display_name}
+            username={data.igUserName}
         />,
         editAlbumEl
     );

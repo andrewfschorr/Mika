@@ -303,9 +303,10 @@ class CreateAlbum extends React.Component {
 
 const homeEl = document.getElementsByClassName('home-search')[0];
 const data = dataBootstrap.get('home');
-if (data.igUsername && homeEl) {
+
+if (data.isIgAuthed && homeEl) {
     ReactDOM.render(
-        data.igUsername && <CreateAlbum/>,
+        data.isIgAuthed && <CreateAlbum/>,
         homeEl
     );
 }
