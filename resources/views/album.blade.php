@@ -6,7 +6,7 @@
         <div class="col-12 text-center">
             <h1 class="album-name">{{$album_name}}</h1>
             <h2 class="ig-name">
-                <a target="_blank" href="http://instagram.com/{{$user_name}}">{{'@' . $user_name}}</a>
+            <a target="_blank" href="http://instagram.com/{{$user_name}}">{{'@' . $user_name}}</a>
             </h2>
         </div>
     </div>
